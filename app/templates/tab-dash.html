@@ -1,5 +1,23 @@
 <ion-view title="Dashboard">
   <ion-content class="has-header padding">
-    <h1>Dash</h1>
+	
+  <div class='list card'
+		<div class='item item-avatar'>
+			<h2>{{food.name}}</h2>
+			<p>Do you like it??</p>
+		</div>
+		<div class='item item-image'>
+			<img ng-src = '{{food.link}}' height = '250' width='300'>  
+		</div>
+	</div>
+
+	<div class = 'control'>
+		<button class='button button-block button-outline button-positive"'ng-click='changePic(true)'>
+			Like it 
+		</button>
+		<button class='button button-block button-outline button-positive' ng-click='changePic(false)'>
+			Hate it 
+		</button>  
+	</div>
   </ion-content>
 </ion-view>
