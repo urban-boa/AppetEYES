@@ -15,6 +15,8 @@ angular.module('Appeteyes.services', [])
     { id: 3, name: 'Ash Ketchum' }
   ];
 
+
+
   return {
     all: function() {
       return friends;
@@ -24,4 +26,40 @@ angular.module('Appeteyes.services', [])
       return friends[friendId];
     }
   };
-});
+})
+
+.factory('Fooder',function(){
+
+
+  var pictures = [{
+      link:'http://dicaspm.com/wp-content/uploads/2013/12/churrasco1.jpg',
+      name:'Delicious Sirloin' 
+    },
+  {link:'http://www.mercadomineiro.com.br/adminpreco/upload/churrasqueiro-pesquisa-precos.jpg', name:'Juicy Steak'},
+  {link:'http://upload.wikimedia.org/wikipedia/commons/5/59/Churrasco.jpg',name:'Tender Dream'}
+  ];
+
+  var selected = [];
+
+  return {
+    all: function() {
+      return pictures;
+    },
+    get: function(foodId) {
+      // Simple index lookup
+      return pictures[foodId];
+    },
+    getRandomPic:function(){
+      var randomizer = Math.floor(Math.random() * (pictures.length - 1));
+      return pictures[randomizer];
+    },
+    addToSelection:function(image){
+      selected.push(image);
+    },
+    getSelected:function(){
+      return selected;
+    }
+  };
+
+
+})

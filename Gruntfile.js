@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
+    // pkg: grunt.file.readJSON('package.json'),
     // Project settings
     yeoman: {
       // configurable paths
@@ -57,26 +57,26 @@ module.exports = function (grunt) {
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
-      bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep', 'newer:copy:app']
-      },
-      html: {
-        files: ['<%= yeoman.app %>/**/*.html'],
-        tasks: ['newer:copy:app']
-      },
-      js: {
-        files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js'],
-        tasks: ['newer:copy:app', 'newer:jshint:all']
-      },
-      styles: {
-        files: ['<%= yeoman.app %>/<%= yeoman.styles %>/**/*.css'],
-        tasks: ['newer:copy:styles', 'autoprefixer', 'newer:copy:tmp']
-      },
-      gruntfile: {
-        files: ['Gruntfile.js'],
-        tasks: ['ngconstant:development', 'newer:copy:app']
-      }
+      // bower: {
+      //   files: ['bower.json'],
+      //   tasks: ['wiredep', 'newer:copy:app']
+      // },
+      // html: {
+      //   files: ['<%= yeoman.app %>/**/*.html'],
+      //   tasks: ['newer:copy:app']
+      // },
+      // js: {
+      //   files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js'],
+      //   tasks: ['newer:copy:app', 'newer:jshint:all']
+      // },
+      // styles: {
+      //   files: ['<%= yeoman.app %>/<%= yeoman.styles %>/**/*.css'],
+      //   tasks: ['newer:copy:styles', 'autoprefixer', 'newer:copy:tmp']
+      // },
+      // gruntfile: {
+      //   files: ['Gruntfile.js'],
+      //   tasks: ['ngconstant:development', 'newer:copy:app']
+      // }
     },
 
     // The actual grunt server settings
