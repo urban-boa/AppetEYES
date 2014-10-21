@@ -1,6 +1,5 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var requestHandler = require('./server/request-handler.js');
 var user = require('./server/user-controller.js');
 var app = express();
 
@@ -22,6 +21,6 @@ app.use(user.decode);
 //user-preference change routes
 
 //server listen
-app.listen(process.env.PORT || '8080');
+app.listen(process.env.PORT || '8100');
 
 module.exports = app;
