@@ -1,8 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var user = require('./server/user-controller.js');
 var app = express();
+var mongodb = process.env.IP;
 
+mongoose.connect(mongodb || 'mongodb://localhost/appetEYES');
 app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -21,6 +24,6 @@ app.use(user.decode);
 //user-preference change routes
 
 //server listen
-app.listen(process.env.PORT || '8100');
+app.listen(process.env.PORT || '8080');
 
 module.exports = app;

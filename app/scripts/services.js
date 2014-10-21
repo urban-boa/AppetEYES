@@ -69,7 +69,7 @@ angular.module('Appeteyes.services', [])
   var login = function (user) {
     return $http({
       method: 'POST',
-      url: 'process.env.IP' || '127.0.0.1:8100',
+      url: '/users/signin',
       data: user
     })
     .then(function (resp) {
