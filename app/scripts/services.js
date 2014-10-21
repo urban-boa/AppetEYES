@@ -63,3 +63,46 @@ angular.module('Appeteyes.services', [])
 
 
 })
+
+.factory('Auth', function ($http, $location, $window) {
+
+  var login = function (user) {
+    return $http({
+      method: 'POST',
+      url: 'process.env.IP' || '127.0.0.1:8100',
+      data: user
+    })
+    .then(function (resp) {
+      return resp.data.token;
+    });
+  };
+
+  var signup = function (user) {
+    return $http({
+      method: 'POST',
+      url: '/users/signup',
+      data: user
+    })
+    .then(function (resp) {
+      return resp.data.token;
+    });
+  };
+
+//// STILL NEED TO EDIT
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('com.shortly');
+  };
+
+  var signout = function () {
+    $window.localStorage.removeItem('com.shortly');
+    $location.path('/login');
+  };
+
+
+  return {
+    login: login,
+    signup: signup,
+    isAuth: isAuth,
+    signout: signout
+  };
+});
