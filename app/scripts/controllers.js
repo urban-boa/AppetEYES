@@ -3,33 +3,43 @@ angular.module('Appeteyes.controllers', [])
 
 .controller('DashCtrl',function($scope,Fooder,Yelper) {
 	//Local Cache with Response from the Yelp API
-	$scope.pics = [];
+	$scope.pics = Fooder.currentPics()||[];
 	//Used to Store the current picture
-	$scope.food =''; 
-	$scope.getRandomPic = function(){
-      var randomizer = Math.floor(Math.random() * ($scope.pics.length - 1));
-      return $scope.pics[randomizer];
+	$scope.food =$scope.pics[0]||''; 
+	//Gets information about the current session. If the user already has loaded pictures, it prevents the App from making another Yelp Request
+	$scope.isNotLoaded = Fooder.isNotLoaded;
+
+	$scope.firstPic = function(){
+		return $scope.pics.shift();
 	};
+	//Used to handle the Like and Hate Button
 	$scope.changePic = function(input){
 		if(input){
 			Fooder.addToSelection($scope.food);
-			$scope.food = $scope.getRandomPic();
+			$scope.food = $scope.firstPic();
 		}else{
-			$scope.food = $scope.getRandomPic();
+			$scope.food = $scope.firstPic();
 		}
 	};
+	//Wrapper for the Yelp Interaction
 	$scope.getPics = function(category,location){
-		var promise = Yelper.search(category,location);
-		promise.then(function(data){
-			console.log(data);
-			$scope.pics = data.data;
-			$scope.changePic();
-		},function(error){
-			console.log(error);
-		});
+		if($scope.isNotLoaded){
+			var promise = Yelper.search(category,location);
+			promise.then(function(data){
+				console.log(data);
+				$scope.pics = data.data;
+				$scope.changePic();
+				Fooder.addPics($scope.pics);
+				Fooder.isNotLoaded = false;
+			},function(error){
+				console.log(error);
+			});
+		}
 	};
+
 	//Sets up default Settings for Category:Food / Location:San Francisco
 	$scope.getPics('food','san-francisco');
+	console.log($scope.pics);
 })
 
 .controller('FriendsCtrl', function($scope, Fooder) {
