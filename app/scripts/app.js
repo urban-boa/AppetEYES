@@ -67,7 +67,7 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
       }
     })
     .state('tab.friend-detail', {
-      url: '/friend/:friendId',
+      url: '/tab/myfoodies/{name}',
       views: {
         'tab-friends': {
           templateUrl: 'templates/friend-detail.html',

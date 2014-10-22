@@ -36,8 +36,9 @@ angular.module('Appeteyes.controllers', [])
   $scope.foods = Fooder.getSelected();
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-  $scope.friend = Friends.get($stateParams.friendId);
+.controller('FriendDetailCtrl', function($scope, $stateParams, Fooder) {
+  $scope.food = Fooder.searchFood($stateParams.name);
+  console.log($scope.food);
 })
 
 .controller('AccountCtrl', function($scope) {

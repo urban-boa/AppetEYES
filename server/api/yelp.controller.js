@@ -25,9 +25,16 @@ exports.refinedSearch = function(req, res) {
       console.log('This is your data',result['businesses'][i].image_url.replace('ms.jpg','l.jpg'),result['businesses'][i].id);
       arr.push({
         link:result.businesses[i].image_url.replace('ms.jpg','l.jpg'),
-        name:result['businesses'][i].id
+        name:result['businesses'][i].id,
+        phone:result['businesses'][i].display_phone,
+        adress:result['businesses'][i].location.adress,
+        mobileUrl:result['businesses'][i].mobile_url,
+        rating:result['businesses'][i].rating_img_url_small,
+        neighborhoods:result['businesses'][i].location.neighborhoods,
+        city:result['businesses'][i].location.city
       });
     }
+    console.log(arr);
     return res.json(200,arr);
   });
 };

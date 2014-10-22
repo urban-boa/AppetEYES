@@ -58,9 +58,18 @@ angular.module('Appeteyes.services', [])
     },
     getSelected:function(){
       return selected;
-    }
-  };
-
+    },
+    searchFood:function(name){
+      for(var i = 0;i < selected.length;i++ ){
+        if(selected[i].name === name){
+          return selected[i];
+        }
+      }
+      return {
+            name:'Not Found'
+        };
+      }
+    };
 })
 
 .factory('Yelper',function($http){
