@@ -32,11 +32,8 @@ app.post('/users/preferences', imageInfo.changeUserPreferences);
 //get restaurant information
 app.get('/restaurant/info', imageInfo.getRestaurantInfo);
 
-//save image info
-app.post('/image/', image.saveImage);
-
 //save restaurant info
-app.post('/restaurant', image.saveRestaurant);
+app.post('/restaurant/info', image.saveRestaurant);
 
 //server listen
 app.listen(process.env.PORT || '8080');
