@@ -4,7 +4,17 @@
   <div class='list card'
 		<div class='item item-avatar'>
 			<h2>{{food.name}}</h2>
-			<p>Do you like it??</p>
+			<div class="list">
+			  <label class="item item-input">
+			    <span class="input-label">Type of Food</span>
+			    <input type="text" ng-model='queryFood'>
+			  </label>
+			  <label class="item item-input">
+			    <span class="input-label">Location</span>
+			    <input type="text" ng-model='queryLocation'>
+			  </label>
+			</div>
+			<button ng-click='getPics(queryFood,queryLocation)'>Hit me</button>
 		</div>
 		<div class='item item-image'>
 			<img ng-src = '{{food.link}}' height = '250' width='300'>  

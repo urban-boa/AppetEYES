@@ -58,8 +58,34 @@ angular.module('Appeteyes.services', [])
     },
     getSelected:function(){
       return selected;
+    },
+    searchFood:function(name){
+      for(var i = 0;i < selected.length;i++ ){
+        if(selected[i].name === name){
+          return selected[i];
+        }
+      }
+      return {
+            name:'Not Found'
+        };
+      }
+    };
+})
+
+.factory('Yelper',function($http){
+
+  return {
+    search:function(category,location){
+      console.log('Searching for',category,location);
+      var parsedLoc = location.split(' ').join('-');
+      console.log('This is the thin',parsedLoc);
+      var yelpUrl = category + '*' + parsedLoc;
+      return $http.get('/yelp/' + yelpUrl);
+      
+    },
+    pics:function(){
+      // return pictures;
     }
   };
+});
 
-
-})
