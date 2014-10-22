@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var user = require('./server/user-controller.js');
+var imageInfo = require('./server/image-restaurant-controller.js');
 var app = express();
 var mongodb = process.env.IP;
 
@@ -20,8 +21,15 @@ app.get('/users/signedin', user.checkAuth);
 app.use(user.decode);
 
 //user-picture history changes
+app.get('/users/likes', imageInfo.getUserLikes);
+app.post('/users/likes', imageInfo.saveUserLikes);
 
 //user-preference change routes
+app.get('/users/preferences', imageInfo.getUserPreferences);
+app.post('/users/preferences', imageInfo.changeUserPreferences);
+
+//get restaurant information
+app.get('/image/info', imageInfo.getRestaurantInfo);
 
 //server listen
 app.listen(process.env.PORT || '8080');
