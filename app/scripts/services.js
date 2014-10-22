@@ -76,7 +76,7 @@ angular.module('Appeteyes.services', [])
       // return pictures;
     }
   };
-});
+})
 
 .factory('Auth', function ($http, $location, $window) {
 
