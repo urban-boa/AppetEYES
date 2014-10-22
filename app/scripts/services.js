@@ -30,29 +30,18 @@ angular.module('Appeteyes.services', [])
 
 .factory('Fooder',function(){
 
-
-  var pictures = [{
-      link:'http://dicaspm.com/wp-content/uploads/2013/12/churrasco1.jpg',
-      name:'Delicious Sirloin' 
-    },
-  {link:'http://www.mercadomineiro.com.br/adminpreco/upload/churrasqueiro-pesquisa-precos.jpg', name:'Juicy Steak'},
-  {link:'http://upload.wikimedia.org/wikipedia/commons/5/59/Churrasco.jpg',name:'Tender Dream'}
-  ];
-
   var selected = [];
+  var picArr = [];
 
   return {
-    all: function() {
-      return pictures;
+    addPics:function(arr){
+      picArr = arr;
     },
-    get: function(foodId) {
-      // Simple index lookup
-      return pictures[foodId];
+    currentPics:function(){
+      return picArr;
     },
-    getRandomPic:function(){
-      var randomizer = Math.floor(Math.random() * (pictures.length - 1));
-      return pictures[randomizer];
-    },
+    isNotLoaded:true,
+
     addToSelection:function(image){
       selected.push(image);
     },
