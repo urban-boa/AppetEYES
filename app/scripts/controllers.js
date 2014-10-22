@@ -23,9 +23,13 @@ angular.module('Appeteyes.controllers', [])
 .controller('AccountCtrl', function($scope, Auth) {
 	$scope.user = {};
 	$scope.submitForm = function(){
+		//$scope.token = 
 		Auth.login($scope.user);
+		//if ($scope.token) redirect THIS MIGHT BELONG IN THE FACTORY SINCE WE'RE NOT PASSING IN RES,REQ
 	}
 	$scope.signUp = function(){
+		//$scope.token =
 		Auth.signup($scope.user);
+		//if ($scope.token) redirect THIS MIGHT BELONG IN THE FACTORY SINCE WE'RE NOT PASSING IN RES,REQ
 	}
 });
