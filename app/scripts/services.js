@@ -61,5 +61,22 @@ angular.module('Appeteyes.services', [])
     }
   };
 
-
 })
+
+.factory('Yelper',function($http){
+
+  return {
+    search:function(category,location){
+      console.log('Searching for',category,location);
+      var parsedLoc = location.split(' ').join('-');
+      console.log('This is the thin',parsedLoc);
+      var yelpUrl = category + '*' + parsedLoc;
+      return $http.get('/yelp/' + yelpUrl);
+      
+    },
+    pics:function(){
+      // return pictures;
+    }
+  };
+});
+

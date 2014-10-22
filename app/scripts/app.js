@@ -47,6 +47,14 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
           controller: 'DashCtrl'
         }
       }
+      // // resolve:{
+      // //   Yelper:'Yelper',
+      // //   Pics:function(Yelper){
+      // //     console.log('YEAHHHHHHHHHHH');
+      // //     return Yelper.search().$promise;
+      // //   }
+      // },
+      // controller:'DashCtrl'
     })
 
     .state('tab.friends', {
