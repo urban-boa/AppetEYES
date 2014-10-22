@@ -73,6 +73,7 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
+      //if (resp.data.token) redirect
       return resp.data.token;
     });
   };
@@ -84,6 +85,7 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
+      //if (resp.data.token) redirect
       return resp.data.token;
     });
   };
