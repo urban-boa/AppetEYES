@@ -6,10 +6,8 @@ angular.module('Appeteyes.controllers', [])
 	$scope.changePic = function(input){
 		if(input){
 			Fooder.addToSelection($scope.food);
-			$scope.food = Fooder.getRandomPic();
-		}else{
-			$scope.food = Fooder.getRandomPic();
 		}
+		$scope.food = Fooder.getRandomPic();
 	};
 
 })
@@ -22,5 +20,12 @@ angular.module('Appeteyes.controllers', [])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, Auth) {
+	$scope.user = {};
+	$scope.submitForm = function(){
+		Auth.login($scope.user);
+	}
+	$scope.signUp = function(){
+		Auth.signup($scope.user);
+	}
 });
