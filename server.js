@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var user = require('./server/user-controller.js');
 var imageInfo = require('./server/image-restaurant-controller.js');
+var image = require('./server/image-controller.js');
 var app = express();
 var mongodb = process.env.IP;
 
@@ -29,7 +30,13 @@ app.get('/users/preferences', imageInfo.getUserPreferences);
 app.post('/users/preferences', imageInfo.changeUserPreferences);
 
 //get restaurant information
-app.get('/image/info', imageInfo.getRestaurantInfo);
+app.get('/restaurant/info', imageInfo.getRestaurantInfo);
+
+//save image info
+app.post('/image/', image.saveImage);
+
+//save restaurant info
+app.post('/restaurant', image.saveRestaurant);
 
 //server listen
 app.listen(process.env.PORT || '8080');
