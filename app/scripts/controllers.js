@@ -28,8 +28,6 @@ angular.module('Appeteyes.controllers', [])
 	$scope.changePic = function(input){
 		if(input){
 			Fooder.addToSelection($scope.food);
-<<<<<<< HEAD
-=======
 			$scope.food = $scope.firstPic();
 		}else{
 			$scope.food = $scope.firstPic();
@@ -70,16 +68,14 @@ angular.module('Appeteyes.controllers', [])
 })
 
 .controller('AccountCtrl', function($scope, Auth) {
-<<<<<<< HEAD
+
 	$scope.user = {};
 	$scope.submitForm = function(){
 		Auth.login($scope.user);
-	}
+	};
 	$scope.signUp = function(){
 		Auth.signup($scope.user);
-	}
-});
-=======
+	};
 	//$scope.user.username and $scope.user.password are being used as ng-models on the template URL tab-account
 	$scope.user = {};
 	console.log('Form');
@@ -112,4 +108,3 @@ angular.module('Appeteyes.controllers', [])
 	};
 
 });
->>>>>>> 0ad35460dc58588513065392b414b4afa7199f73

@@ -137,7 +137,6 @@ angular.module('Appeteyes.services', [])
   };
 });
 
-<<<<<<< HEAD
 })
 
 .factory('Auth', function ($http, $location, $window) {
@@ -182,5 +181,3 @@ angular.module('Appeteyes.services', [])
     signout: signout
   };
 });
-=======
->>>>>>> 0ad35460dc58588513065392b414b4afa7199f73
