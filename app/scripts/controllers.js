@@ -77,30 +77,15 @@ angular.module('Appeteyes.controllers', [])
 	//$scope.user.username and $scope.user.password are being used as ng-models on the template URL tab-account
 	$scope.user = {};
 	console.log('Form');
+
 	$scope.submitForm = function(){
-		//$scope.token = 
-		var promise = Auth.login($scope.user);
-		promise.then(function(data){
-				if(data){
-				console.log('User Logged In');
-				Auth.setToken(data);
-				console.log('This is your token',Auth.getToken(data));
-			}else{
-				console.log('It doesnt work',Auth.token);
-			}
-		});
-		//if ($scope.token) redirect THIS MIGHT BELONG IN THE FACTORY SINCE WE'RE NOT PASSING IN RES,REQ
+		Auth.login($scope.user);
 	};
+
 	$scope.signUp = function(){
-		//$scope.token =
 		Auth.signup($scope.user);
-		if(Auth.token !== undefined ){
-			console.log('User Logged In');
-		}else{
-			console.log('It doesnt work');
-		}
-		//if ($scope.token) redirect THIS MIGHT BELONG IN THE FACTORY SINCE WE'RE NOT PASSING IN RES,REQ
 	};
+
 	$scope.signOut = function(){
 		Auth.signout();
 	};
