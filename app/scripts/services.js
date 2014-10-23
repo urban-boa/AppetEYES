@@ -76,7 +76,7 @@ angular.module('Appeteyes.services', [])
   };
 })
 
-.factory('Auth', function ($http, $location, $window, $state) {
+.factory('Auth', function ($http, $location, $window) {
 
   var token;
   var login = function (user) {
