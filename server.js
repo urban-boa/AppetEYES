@@ -21,7 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 console.log('Starting APP');
 //Mongo DB Connection
-mongoose.connect('mongodb://localhost/appteys');
+var mongoUrl = process.env.port ? "mongodb://MongoLab-s:mFZxpWu8Pi.eNBqD4fBHxSXXg0DI.egdrUzjN8j3lsA-@ds041157.mongolab.com:41157/MongoLab-s" : 'mongodb://localhost/appteys';
+mongoose.connect(mongoUrl);
 //user-signin routes
 app.post('/users/signin', user.signin);
 app.post('/users/signup', user.signup);

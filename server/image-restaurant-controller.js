@@ -1,4 +1,4 @@
-var Q = require('q');
+var Q = require('q'); // A Promise library
 var mongoose = require('mongoose');
 var User = require('./user-model.js');
 var Image = require('./image-model.js');
