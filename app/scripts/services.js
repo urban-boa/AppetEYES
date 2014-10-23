@@ -78,7 +78,7 @@ angular.module('Appeteyes.services', [])
   };
 })
 
-.factory('Auth', function ($http, $location, $window) {
+.factory('Auth', function ($http, $location, $window, $state) {
 
   var token;
   var login = function (user) {
@@ -88,8 +88,7 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
-      console.log(resp);
-      //if (resp.data.token) redirect
+      if (resp.data.token) $state.transitionTo('tab.dash');
       return resp.data.token;
     });
   };
@@ -101,7 +100,6 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
-      console.log(resp);
       //if (resp.data.token) redirect
       return resp.data.token;
     });
