@@ -14,7 +14,6 @@ exports.refinedSearch = function(req, res) {
   var params = req.params[0].split('*');
   var category = params[0];
   var location = params[1];
-  var offset = params[2];
   console.log(category,location);
   console.log('Seaching for food locations');
   //The Yelp api expects requests in the form of : Category*Location 

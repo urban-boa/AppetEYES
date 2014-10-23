@@ -8,7 +8,6 @@ angular.module('Appeteyes.controllers', [])
 	$scope.food =$scope.pics[0]||''; 
 	//Gets information about the current session. If the user already has loaded pictures, it prevents the App from making another Yelp Request
 	$scope.isNotLoaded = Fooder.isNotLoaded;
-	$scope.offset = 0;
 	$scope.like = 'Start Swipin';
 	$scope.sliding = function(direction){
 		if(direction === 'left'){
@@ -45,16 +44,15 @@ angular.module('Appeteyes.controllers', [])
 	//Sets up Dinamic Class for the Header  
 	$scope.mood = '"button-positive"';
 	//Wrapper for the Yelp Interaction
-	$scope.getPics = function(category,location, offset){
+	$scope.getPics = function(category,location){
 		if($scope.isNotLoaded){
-			var promise = Yelper.search(category,location, offset);
+			var promise = Yelper.search(category,location);
 			promise.then(function(data){
 				console.log(data);
-				$scope.pics.concat(data.data);
+				$scope.pics = data.data;
 				$scope.changePic();
 				Fooder.addPics($scope.pics);
 				Fooder.isNotLoaded = false;
-				$scope.offset = $scope.offset+20;
 			},function(error){
 				console.log(error);
 			});
@@ -62,13 +60,8 @@ angular.module('Appeteyes.controllers', [])
 	};
 
 	//Sets up default Settings for Category:Food / Location:San Francisco
-	$scope.getPics('food','san-francisco',$scope.offset);
-	$scope.$watch('pics', function(newVal,oldVal) {
-		if ($scope.pics.length<6) {
-			$scope.isNotLoaded = true;
-			$scope.getPics('food', 'san-francisco',$scope.offset);
-		}
-	}
+	$scope.getPics('food','san-francisco');
+	console.log($scope.pics);
 })
 
 .controller('FriendsCtrl', function($scope, Fooder) {
