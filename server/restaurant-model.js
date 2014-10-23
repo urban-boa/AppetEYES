@@ -8,8 +8,7 @@ var RestaurantSchema = new mongoose.Schema({
   },
   restaurantName: String,
   address: String,
-  phoneNumber: String,
-  price: Number
+  phoneNumber: String
 });
 
 module.exports = mongoose.model('restaurant', RestaurantSchema);
