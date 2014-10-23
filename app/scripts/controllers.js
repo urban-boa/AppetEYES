@@ -57,7 +57,6 @@ angular.module('Appeteyes.controllers', [])
 				console.log(error);
 			});
 		}
-		$scope.food = Fooder.getRandomPic();
 	};
 
 	//Sets up default Settings for Category:Food / Location:San Francisco
@@ -75,14 +74,6 @@ angular.module('Appeteyes.controllers', [])
 })
 
 .controller('AccountCtrl', function($scope, Auth) {
-
-	$scope.user = {};
-	$scope.submitForm = function(){
-		Auth.login($scope.user);
-	};
-	$scope.signUp = function(){
-		Auth.signup($scope.user);
-	};
 	//$scope.user.username and $scope.user.password are being used as ng-models on the template URL tab-account
 	$scope.user = {};
 	console.log('Form');
