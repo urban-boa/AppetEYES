@@ -1,4 +1,4 @@
-<ion-view title="Foodies">
+<ion-view title="Dashboard">
   <ion-content class="has-header padding">
 	
   <div class='list card'>
@@ -16,7 +16,7 @@
 			</div>
 			<button ng-click='getPics(queryFood,queryLocation)'>Hit me</button>
 		</div> -->
-		<button ng-class='{{mood}}'>
+		<button class=' button button-block button-positive' ng-class='{"button-balanced":loveIt,"button-assertive":hateIt}'>
 			{{like}}	
 		</button>  
 		<div class='item item-image'  on-swipe-right='changePic(true)' on-swipe-left='changePic(false)' on-drag-right = 'sliding("right")' on-drag-left = 'sliding("left")' on-release='sliding()'>
