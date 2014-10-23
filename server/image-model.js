@@ -6,8 +6,7 @@ var ImageSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  restaurantID: String,
-  foodCategory: String
+  restaurantID: String
 });
 
 module.exports = mongoose.model('image', ImageSchema);
