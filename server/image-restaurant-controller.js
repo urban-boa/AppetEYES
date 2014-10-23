@@ -83,7 +83,7 @@ module.exports = {
         } else {
           user.location = newPrefs.location;
           user.cusines = newPrefs.cusines;
-          user.price = newPrefs.price;
+          //user.price = newPrefs.price;
           user.save(function(error){
             next(error);
           });

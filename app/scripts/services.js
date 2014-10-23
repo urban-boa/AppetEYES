@@ -30,38 +30,114 @@ angular.module('Appeteyes.services', [])
 
 .factory('Fooder',function(){
 
-
-  var pictures = [{
-      link:'http://dicaspm.com/wp-content/uploads/2013/12/churrasco1.jpg',
-      name:'Delicious Sirloin' 
-    },
-  {link:'http://www.mercadomineiro.com.br/adminpreco/upload/churrasqueiro-pesquisa-precos.jpg', name:'Juicy Steak'},
-  {link:'http://upload.wikimedia.org/wikipedia/commons/5/59/Churrasco.jpg',name:'Tender Dream'}
-  ];
-
   var selected = [];
+  var picArr = [];
 
   return {
-    all: function() {
-      return pictures;
+    addPics:function(arr){
+      picArr = arr;
     },
-    get: function(foodId) {
-      // Simple index lookup
-      return pictures[foodId];
+    currentPics:function(){
+      return picArr;
     },
-    getRandomPic:function(){
-      var randomizer = Math.floor(Math.random() * (pictures.length - 1));
-      return pictures[randomizer];
-    },
+    isNotLoaded:true,
+
     addToSelection:function(image){
       selected.push(image);
     },
     getSelected:function(){
       return selected;
+    },
+    searchFood:function(name){
+      for(var i = 0;i < selected.length;i++ ){
+        if(selected[i].name === name){
+          return selected[i];
+        }
+      }
+      return {
+            name:'Not Found'
+        };
+      }
+    };
+})
+
+.factory('Yelper',function($http){
+
+  return {
+    search:function(category,location){
+      console.log('Searching for',category,location);
+      var parsedLoc = location.split(' ').join('-');
+      console.log('This is the thin',parsedLoc);
+      var yelpUrl = category + '*' + parsedLoc;
+      return $http.get('/yelp/' + yelpUrl);
+      
+    },
+    pics:function(){
+      // return pictures;
     }
   };
+})
 
+.factory('Auth', function ($http, $location, $window) {
 
+  var token;
+  var login = function (user) {
+    return $http({
+      method: 'POST',
+      url: '/users/signin',
+      data: user
+    })
+    .then(function (resp) {
+      console.log(resp);
+      //if (resp.data.token) redirect
+      return resp.data.token;
+    });
+  };
+
+  var signup = function (user) {
+    return $http({
+      method: 'POST',
+      url: '/users/signup',
+      data: user
+    })
+    .then(function (resp) {
+      console.log(resp);
+      //if (resp.data.token) redirect
+      return resp.data.token;
+    });
+  };
+
+//// STILL NEED TO EDIT
+  var isAuth = function () {
+    console.log(!!token);
+    // return !!token;
+    return !!$window.localStorage.getItem('com.appeteyes');
+  };
+
+  var signout = function () {
+    $window.localStorage.removeItem('com.appeteyes');
+    // $location.path('/tab.account');
+  };
+
+  var setToken = function(givenToken){
+    $window.localStorage.setItem('com.appeteyes', givenToken);
+  };
+  var getToken = function(){
+    return !!$window.localStorage.getItem('com.appeteyes');
+  };
+
+  return {
+    login: login,
+    signup: signup,
+    isAuth: isAuth,
+    signout: signout,
+    token:token,
+    setToken:setToken,
+    getToken:getToken
+  };
+});
+
+<<<<<<< HEAD
 })
 
 .factory('Auth', function ($http, $location, $window) {
@@ -106,3 +182,5 @@ angular.module('Appeteyes.services', [])
     signout: signout
   };
 });
+=======
+>>>>>>> 0ad35460dc58588513065392b414b4afa7199f73

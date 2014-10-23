@@ -8,7 +8,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appeteyes.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$rootScope, $state, Auth) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,10 +19,20 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
   });
+  $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
+      if (toState.authenticate && !Auth.isAuth()){
+        // User isn’t authenticated
+        $state.transitionTo('tab.account');
+        event.preventDefault(); 
+      }
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
+
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -34,7 +44,7 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
     .state('tab', {
       url: '/tab',
       abstract: true,
-      templateUrl: 'templates/tabs.html'
+      templateUrl: 'templates/tabs.html',
     })
 
     // Each tab has its own nav history stack:
@@ -46,7 +56,16 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
           templateUrl: 'templates/tab-dash.html',
           controller: 'DashCtrl'
         }
-      }
+      },
+      authenticate:true
+      // // resolve:{
+      // //   Yelper:'Yelper',
+      // //   Pics:function(Yelper){
+      // //     console.log('YEAHHHHHHHHHHH');
+      // //     return Yelper.search().$promise;
+      // //   }
+      // },
+      // controller:'DashCtrl'
     })
 
     .state('tab.friends', {
@@ -56,10 +75,11 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
           templateUrl: 'templates/tab-friends.html',
           controller: 'FriendsCtrl'
         }
-      }
+      },
+      authenticate:true
     })
     .state('tab.friend-detail', {
-      url: '/friend/:friendId',
+      url: '/tab/myfoodies/{name}',
       views: {
         'tab-friends': {
           templateUrl: 'templates/friend-detail.html',
@@ -77,6 +97,7 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
         }
       }
     });
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
