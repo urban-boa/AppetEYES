@@ -64,7 +64,7 @@ angular.module('Appeteyes.services', [])
 .factory('Yelper',function($http){
 
   return {
-    search:function(category,location){
+    search: function(category,location){
       console.log('Searching for',category,location);
       var parsedLoc = location.split(' ').join('-');
       console.log('This is the thin',parsedLoc);
@@ -72,7 +72,7 @@ angular.module('Appeteyes.services', [])
       return $http.get('/yelp/' + yelpUrl);
       
     },
-    pics:function(){
+    pics: function(){
       // return pictures;
     }
   };
@@ -111,7 +111,6 @@ angular.module('Appeteyes.services', [])
 
 //// STILL NEED TO EDIT
   var isAuth = function () {
-    console.log(!!token);
     return !!$window.localStorage.getItem('com.appeteyes');
   };
 
@@ -124,7 +123,7 @@ angular.module('Appeteyes.services', [])
   };
 
   var getToken = function(){
-    return !!$window.localStorage.getItem('com.appeteyes');
+    return $window.localStorage.getItem('com.appeteyes');
   };
 
   return {
