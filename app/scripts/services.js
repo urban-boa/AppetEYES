@@ -65,7 +65,9 @@ angular.module('Appeteyes.services', [])
 
   return {
     search:function(category,location){
+      console.log('Searching for',category,location);
       var parsedLoc = location.split(' ').join('-');
+      console.log('This is the thin',parsedLoc);
       var yelpUrl = category + '*' + parsedLoc;
       return $http.get('/yelp/' + yelpUrl);
       
@@ -86,10 +88,7 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
-      if (resp.data.token) {
-        $state.transitionTo('tab.dash');
-      }else 
-        $state.transitionTo('tab.account')
+      if (resp.data.token) $state.transitionTo('tab.dash');
       return resp.data.token;
     });
   };
