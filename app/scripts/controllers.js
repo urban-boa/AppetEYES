@@ -11,19 +11,27 @@ angular.module('Appeteyes.controllers', [])
 	$scope.like = 'Start Swipin';
 	$scope.sliding = function(direction){
 		if(direction === 'left'){
-			$scope.mood = '"button button-block  button-assertive"';
+			$scope.mood = '"button-assertive"';
+			$scope.hateIt = true;
 			$scope.like ='Hate it'; 
 		}else if(direction === 'right'){
-			$scope.mood = '"button button-block button-outline button-balanced"';
+			$scope.mood = '"button-balanced"';
+			$scope.loveIt = true;
 			$scope.like ='Love it'; 
 		}else{
-			// $scope.mood = '"button button-block  button-positive"';
+			$scope.mood = '"button-positive"';
+			//Resetting Button Classes
+			$scope.loveIt = false;
+			$scope.hateIt = false;
 			$scope.like = 'Start Swipin';
 		}
 	} ;
 	$scope.firstPic = function(){
 		return $scope.pics.shift();
 	};
+	//Models for Dinamic Classes used on the top-button
+	$scope.loveIt = false;
+	$scope.hateIt = false;
 	//Used to handle the Like and Hate Button
 	$scope.changePic = function(input){
 		if(input){
@@ -34,7 +42,7 @@ angular.module('Appeteyes.controllers', [])
 		}
 	};
 	//Sets up Dinamic Class for the Header  
-	$scope.mood = '"button button-block button-outline button-positive"';
+	$scope.mood = '"button-positive"';
 	//Wrapper for the Yelp Interaction
 	$scope.getPics = function(category,location){
 		if($scope.isNotLoaded){
