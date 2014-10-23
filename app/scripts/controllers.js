@@ -104,6 +104,7 @@ angular.module('Appeteyes.controllers', [])
 	$scope.signOut = function(){
 		Auth.signout();
 	};
+})
 
 .controller('PreferencesCtrl', function($scope, Preferences) {
 

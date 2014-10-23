@@ -61,6 +61,23 @@ angular.module('Appeteyes.services', [])
     };
 })
 
+.factory('Yelper',function($http){
+
+  return {
+    search:function(category,location){
+      console.log('Searching for',category,location);
+      var parsedLoc = location.split(' ').join('-');
+      console.log('This is the thin',parsedLoc);
+      var yelpUrl = category + '*' + parsedLoc;
+      return $http.get('/yelp/' + yelpUrl);
+      
+    },
+    pics:function(){
+      // return pictures;
+    }
+  };
+})
+
 .factory('Auth', function ($http, $location, $window, $state) {
 
   var token;
@@ -116,7 +133,7 @@ angular.module('Appeteyes.services', [])
     setToken:setToken,
     getToken:getToken
   };
-});
+})
 
 //Holds the logic for users to set up their 'preferences'
 .factory('Preferences', function($http){
@@ -176,7 +193,6 @@ angular.module('Appeteyes.services', [])
       userPreferences.location = newPreferences.location;
       //send POST request to server with userSettings as data
       var promise = $http.post('/users/preferences', userPreferences);
-      prom
 
       console.log('now I just send a post');
       console.log(userPreferences);
