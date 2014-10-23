@@ -80,6 +80,7 @@ angular.module('Appeteyes.services', [])
 
 .factory('Auth', function ($http, $location, $window) {
 
+  var token;
   var login = function (user) {
     return $http({
       method: 'POST',
@@ -87,6 +88,7 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
+      console.log(resp);
       //if (resp.data.token) redirect
       return resp.data.token;
     });
@@ -99,6 +101,7 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
+      console.log(resp);
       //if (resp.data.token) redirect
       return resp.data.token;
     });
@@ -106,20 +109,31 @@ angular.module('Appeteyes.services', [])
 
 //// STILL NEED TO EDIT
   var isAuth = function () {
-    return !!$window.localStorage.getItem('com.shortly');
+    console.log(!!token);
+    // return !!token;
+    return !!$window.localStorage.getItem('com.appeteyes');
   };
 
   var signout = function () {
-    $window.localStorage.removeItem('com.shortly');
-    $location.path('/login');
+    $window.localStorage.removeItem('com.appeteyes');
+    // $location.path('/tab.account');
   };
 
+  var setToken = function(givenToken){
+    $window.localStorage.setItem('com.appeteyes', givenToken);
+  };
+  var getToken = function(){
+    return !!$window.localStorage.getItem('com.appeteyes');
+  };
 
   return {
     login: login,
     signup: signup,
     isAuth: isAuth,
-    signout: signout
+    signout: signout,
+    token:token,
+    setToken:setToken,
+    getToken:getToken
   };
 });
 
