@@ -60,11 +60,7 @@ angular.module('Appeteyes.controllers', [])
 	};
 
 	//Sets up default Settings for Category:Food / Location:San Francisco
-<<<<<<< HEAD
-	$scope.getPics('food','san-francisco',$scope.offset);
-=======
 	$scope.getPics('food','san-francisco');
->>>>>>> 5e78ca8fccfca3f4911b0b5013f4668350f8b1c9
 	console.log($scope.pics);
 })
 
