@@ -16,18 +16,18 @@
 			</div>
 			<button ng-click='getPics(queryFood,queryLocation)'>Hit me</button>
 		</div> -->
-		<div class='item item-image'>
+		<button ng-class='{{mood}}'>
+			{{like}}	
+		</button>  
+		<div class='item item-image'  on-swipe-right='changePic(true)' on-swipe-left='changePic(false)' on-drag-right = 'sliding("right")' on-drag-left = 'sliding("left")' on-release='sliding()'>
 			<img ng-src = '{{food.link}}'>  
 		</div>
 	</div>
 
 	<div class = 'control'>
-		<button class='button button-block button-outline button-positive"'ng-click='changePic(true)'>
+		<!-- <button class='button button-block button-outline button-positive"'ng-click='changePic(true)'>
 			Like it 
-		</button>
-		<button class='button button-block button-outline button-positive' ng-click='changePic(false)'>
-			Hate it 
-		</button>  
+		</button> -->
 	</div>
   </ion-content>
 </ion-view>
