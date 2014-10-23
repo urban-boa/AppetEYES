@@ -135,8 +135,6 @@ angular.module('Appeteyes.services', [])
     setToken:setToken,
     getToken:getToken
   };
-});
-
 })
 
 .factory('Auth', function ($http, $location, $window) {

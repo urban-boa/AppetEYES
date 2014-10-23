@@ -48,7 +48,6 @@ angular.module('Appeteyes.controllers', [])
 			},function(error){
 				console.log(error);
 			});
->>>>>>> 0ad35460dc58588513065392b414b4afa7199f73
 		}
 		$scope.food = Fooder.getRandomPic();
 	};
