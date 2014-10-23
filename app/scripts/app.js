@@ -22,7 +22,7 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -76,10 +76,39 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
           controller: 'AccountCtrl'
         }
       }
+    })
+
+    .state('tab.preferences', {
+      url: '/preferences',
+      views: {
+        'tab-preferences': {
+          templateUrl: 'templates/tab-preferences.html',
+          controller: 'PreferencesCtrl'
+        }
+      }
     });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
 
-});
+  //We add $httpInterceptor into the array
+  //$httpProvider.httpInterceptor.push('AttachTokens');
+})
 
+// .factory('AttachTokens', function ($window) {
+//   // this is an $httpInterceptor
+//   // its job is to stop all out going request
+//   // then look in local storage and find the user's token
+//   // then add it to the header so the server can validate the request
+//   var attach = {
+//     request: function (object) {
+//       var jwt = $window.localStorage.getItem('com.shortly');
+//       if (jwt) {
+//         object.headers['x-access-token'] = jwt;
+//       }
+//       object.headers['Allow-Control-Allow-Origin'] = '*';
+//       return object;
+//     }
+//   };
+//   return attach;
+// });
