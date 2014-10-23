@@ -80,6 +80,7 @@ angular.module('Appeteyes.services', [])
 
 .factory('Auth', function ($http, $location, $window, $state) {
 
+  var token;
   var login = function (user) {
     return $http({
       method: 'POST',
@@ -87,12 +88,8 @@ angular.module('Appeteyes.services', [])
       data: user
     })
     .then(function (resp) {
-      if (resp.data.token) {
-        $state.transitionTo('tab.dash');
-      } else {
-        $state.transitionTo('tab.account');
-      }
-      setToken(resp.data.token);
+      if (resp.data.token) $state.transitionTo('tab.dash');
+      return resp.data.token;
     });
   };
 
@@ -104,25 +101,25 @@ angular.module('Appeteyes.services', [])
     })
     .then(function (resp) {
       //if (resp.data.token) redirect
-      setToken(resp.data.token);
-      if (resp.data.token) $state.transitionTo('tab.dash');
+      return resp.data.token;
     });
   };
 
 //// STILL NEED TO EDIT
   var isAuth = function () {
     console.log(!!token);
+    // return !!token;
     return !!$window.localStorage.getItem('com.appeteyes');
   };
 
   var signout = function () {
     $window.localStorage.removeItem('com.appeteyes');
+    // $location.path('/tab.account');
   };
 
   var setToken = function(givenToken){
     $window.localStorage.setItem('com.appeteyes', givenToken);
   };
-
   var getToken = function(){
     return !!$window.localStorage.getItem('com.appeteyes');
   };
@@ -132,8 +129,9 @@ angular.module('Appeteyes.services', [])
     signup: signup,
     isAuth: isAuth,
     signout: signout,
+    token:token,
     setToken:setToken,
     getToken:getToken
   };
-
 });
+

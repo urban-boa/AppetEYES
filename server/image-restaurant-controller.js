@@ -1,4 +1,4 @@
-var Q = require('q'); // A Promise library
+  var Q = require('q'); // A Promise library
 var mongoose = require('mongoose');
 var User = require('./user-model.js');
 var Image = require('./image-model.js');
@@ -6,23 +6,23 @@ var Restaurant = require('./restaurant-model.js');
 
 module.exports = {
 
-  saveUserLikes: function(req, res, next){
+  saveUserLikes: function(req, res, next){ // Saves what the user liked/disliked to the database.
     //req.username is set by the middleware user.decode
     var username = req.username;
-    var findUser = Q.nbind(User.findOne, User);
-    var findImage = Q.nbind(Image.findOne, Image);
+    var findUser = Q.nbind(User.findOne, User); // Creates a promisified function to find a single user based on a query
+    var findImage = Q.nbind(Image.findOne, Image); // Creates a promisified function to find a single image based on a query
 
     //request object should have a body that contains
     //newly liked/disliked images arrays
 
-    findUser({username:username})
+    findUser({username:username})// Combine locally stored liked/disliked images, then save to database.
       .then(function(user){
         if (!user) {
           next(new Error('user does not exist.'));
         } else {
           user.likedImages = user.likedImages.concat(req.body.liked);
           user.dislikedImages = user.likedImages.concat(req.body.disliked);
-          user.save(function(error){
+          user.save(function(error){ // 
             next(error);
           });
           res.status(200).end();
@@ -33,10 +33,10 @@ module.exports = {
       });
   },
 
-  getUserLikes: function(req, res, next){
+  getUserLikes: function(req, res, next){ // retrieve likes from DB
     //req.username is set by the middleware user.decode
     var username = req.username;
-    var findUser = Q.nbind(User.findOne, User);
+    var findUser = Q.nbind(User.findOne, User); // REPEATS: SHOULD WE REFACTOR THESE?
     var findImage = Q.nbind(Image.findOne, Image);
 
     findUser({username:username})
@@ -66,14 +66,14 @@ module.exports = {
       });
   },
 
-  changeUserPreferences: function(req, res, next){
+  changeUserPreferences: function(req, res, next){ // Save the user's last search preferences to DB
     //req.username is set by the middleware user.decode
     var username = req.username;
     //request should have new preferences in its body
     //it should be stored in a property called "newPreferences"
     //which should be an object
     var newPrefs = req.body;
-    var findOne = Q.nbind(User.findOne, User);
+    var findOne = Q.nbind(User.findOne, User); //REPEAT
 
     //update the existing 
     findOne({username:username})
@@ -83,7 +83,7 @@ module.exports = {
         } else {
           user.location = newPrefs.location;
           user.cusines = newPrefs.cusines;
-          //user.price = newPrefs.price;
+          user.price = newPrefs.price;
           user.save(function(error){
             next(error);
           });
@@ -95,7 +95,7 @@ module.exports = {
       });
   },
 
-  getUserPreferences: function(req, res, next){
+  getUserPreferences: function(req, res, next){ // Retrieves the user's last search preferences to DB
     //req.username is set by the middleware user.decode
     var username = req.username;
     var findOne = Q.nbind(User.findOne, User);
@@ -107,10 +107,7 @@ module.exports = {
         if (!user){
           next(new Error('user does not exist.'));
         } else {
-          res.json({
-            cusines: user.cusines,
-            location: user.location
-          });
+          res.json(user.preferredCategories);
         }
       })
       .fail(function(error){
@@ -118,7 +115,7 @@ module.exports = {
       });
   },
 
-  getRestaurantInfo: function(req, res, next){
+  getRestaurantInfo: function(req, res, next){ // Retrieve restaurant info based on the image selected
     //request body should contain the ImageID
     var imageID = req.body.imageID;
     var findImage = Q.nbind(Image.findOne, Image);
