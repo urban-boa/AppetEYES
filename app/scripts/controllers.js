@@ -28,6 +28,10 @@ angular.module('Appeteyes.controllers', [])
 		}
 	} ;
 	$scope.firstPic = function(){
+		if ($scope.pics.length < 6) {
+			$scope.isNotLoaded = true;
+			$scope.getPics('food','san-francisco', $scope.offset);
+		}
 		return $scope.pics.shift();
 	};
 	//Models for Dinamic Classes used on the top-button
@@ -50,7 +54,7 @@ angular.module('Appeteyes.controllers', [])
 			var promise = Yelper.search(category, location, offset);
 			promise.then(function(data){
 				console.log(data);
-				$scope.pics = data.data;
+				$scope.pics = $scope.pics.concat(data.data);
 				$scope.changePic();
 				Fooder.addPics($scope.pics);
 				Fooder.isNotLoaded = false;
