@@ -64,11 +64,11 @@ angular.module('Appeteyes.services', [])
 .factory('Yelper',function($http){
 
   return {
-    search: function(category,location){
+    search: function(category, location, offset){
       console.log('Searching for',category,location);
       var parsedLoc = location.split(' ').join('-');
       console.log('This is the thin',parsedLoc);
-      var yelpUrl = category + '*' + parsedLoc;
+      var yelpUrl = category + '*' + parsedLoc + '*' + offset;
       return $http.get('/yelp/' + yelpUrl);
       
     },
