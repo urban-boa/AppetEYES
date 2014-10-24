@@ -8,6 +8,7 @@ var user = require('./server/user-controller.js');
 var yelp = require('./server/api/yelp.controller.js');
 var app = express();
 
+
 app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
