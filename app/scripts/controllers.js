@@ -98,7 +98,7 @@ angular.module('Appeteyes.controllers', [])
 
 })
 
-.controller('PreferencesCtrl', function($scope, Preferences) {
+.controller('PreferencesCtrl', function($scope, Preferences, Auth) {
 
   //an object that holds the state of what is currently selected
   $scope.selectedOption = {
@@ -108,14 +108,16 @@ angular.module('Appeteyes.controllers', [])
 
   $scope.importUserPreferences = function(token){
     //uncommenting when importing from factory/server works
-    //$scope.userPreferences = Preferences.importPreferences('abc');
+    //get token from local storage
+    var localToken = Auth.getToken();
+    $scope.userPreferences = Preferences.importPreferences(localToken);
+    console.log('user prefs pulled from db on load', $scope.userPreferences);
 
     //remove once importing from factory/server works
-    $scope.userPreferences = {
-      token: 56,
-      cuisines: ['Thai', 'American', 'Japanese'],
-      location: 'San Francisco',
-    };
+    // $scope.userPreferences = {
+    //   cuisines: ['Thai', 'American', 'Japanese'],
+    //   location: 'San Francisco',
+    // };
 
     //pre-select options from imported preferences
     //set the imported cuisines
