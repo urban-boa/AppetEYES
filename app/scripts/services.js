@@ -80,7 +80,6 @@ angular.module('Appeteyes.services', [])
 
 .factory('Auth', function ($http, $location, $window, $state) {
 
-  var token;
   var login = function (user) {
     return $http({
       method: 'POST',
@@ -133,5 +132,5 @@ angular.module('Appeteyes.services', [])
     setToken:setToken,
     getToken:getToken
   };
-});
 
+});

@@ -1,4 +1,4 @@
-  var Q = require('q'); // A Promise library
+var Q = require('q'); // A Promise library
 var mongoose = require('mongoose');
 var User = require('./user-model.js');
 var Image = require('./image-model.js');
@@ -107,7 +107,10 @@ module.exports = {
         if (!user){
           next(new Error('user does not exist.'));
         } else {
-          res.json(user.preferredCategories);
+          res.json({
+            cusines: user.cusines,
+            location: user.location
+          });
         }
       })
       .fail(function(error){

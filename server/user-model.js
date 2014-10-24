@@ -17,7 +17,7 @@ var UserSchema = new mongoose.Schema({
   salt: String,
   cusines: [String],
   location: String,
-  price: Number,
+  //price: Number,
   likedImages: [String],
   dislikedImages: [String]
 });
