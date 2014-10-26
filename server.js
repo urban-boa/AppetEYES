@@ -20,11 +20,13 @@ mongoose.connect(mongoUrl);
 app.post('/users/signin', user.signin);
 app.post('/users/signup', user.signup);
 app.get('/users/signedin', user.checkAuth);
-app.get('/yelp/*', yelp.refinedSearch);
 
 //if the client is not pinging a user-signin route, 
 //then we check if the client is signed in
 app.use(user.decode);
+
+//get yelp search results
+app.get('/yelp/*', yelp.refinedSearch);
 
 //user-picture history changes
 app.get('/users/likes', imageInfo.getUserLikes);
@@ -34,10 +36,8 @@ app.post('/users/likes', imageInfo.saveUserLikes);
 app.get('/users/preferences', imageInfo.getUserPreferences);
 app.post('/users/preferences', imageInfo.changeUserPreferences);
 
-//get restaurant information
+//restaurant information
 app.get('/restaurant/info', imageInfo.getRestaurantInfo);
-
-//save restaurant info
 app.post('/restaurant/info', image.saveRestaurant);
 
 //server listen

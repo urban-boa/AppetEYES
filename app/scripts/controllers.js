@@ -1,7 +1,7 @@
 'use strict';
 angular.module('Appeteyes.controllers', [])
 
-.controller('DashCtrl',function($scope,Fooder,Yelper, $http) {
+.controller('DashCtrl',function($scope,Fooder, Yelper, $http) {
   //Local Cache with Response from the Yelp API
   $scope.pics = Fooder.currentPics()||[];
   //Used to Store the current picture
@@ -9,7 +9,9 @@ angular.module('Appeteyes.controllers', [])
   //Gets information about the current session. If the user already has loaded pictures, it prevents the App from making another Yelp Request
   $scope.isNotLoaded = Fooder.isNotLoaded;
   $scope.like = 'Start Swipin';
+  //Offset ensures we don't keep repeating the same pictures or run out of pictures to show
   $scope.offset = 0;
+  
   $scope.sliding = function(direction){
     if(direction === 'left'){
       $scope.mood = '"button-assertive"';
@@ -26,7 +28,8 @@ angular.module('Appeteyes.controllers', [])
       $scope.hateIt = false;
       $scope.like = 'Start Swipin';
     }
-  } ;
+  };
+
   $scope.firstPic = function(){
     if ($scope.pics.length < 6) {
       $scope.isNotLoaded = true;
@@ -34,6 +37,7 @@ angular.module('Appeteyes.controllers', [])
     }
     return $scope.pics.shift();
   };
+
   //Models for Dinamic Classes used on the top-button
   $scope.loveIt = false;
   $scope.hateIt = false;
@@ -43,11 +47,14 @@ angular.module('Appeteyes.controllers', [])
       Fooder.addToSelection($scope.food);
       $scope.food = $scope.firstPic();
     }else{
+      Fooder.addToDisliked($scope.food);
       $scope.food = $scope.firstPic();
     }
   };
+
   //Sets up Dinamic Class for the Header  
   $scope.mood = '"button-positive"';
+
   //Wrapper for the Yelp Interaction
   $scope.getPics = function(category,location, offset){
     if($scope.isNotLoaded){
@@ -59,6 +66,17 @@ angular.module('Appeteyes.controllers', [])
         Fooder.addPics($scope.pics);
         Fooder.isNotLoaded = false;
         $scope.offset += 20;
+        $http({
+          method: 'POST',
+          url: '/restaurant/info',
+          data: data
+        })
+        .then(function(res){
+          console.log(res.status);
+        })
+        .catch(function(error){
+          console.log('')
+        })
       },function(error){
         console.log(error);
       });
@@ -69,7 +87,10 @@ angular.module('Appeteyes.controllers', [])
     $http({
       method: 'POST',
       url: '/users/likes',
-      data: Fooder.getSelected()
+      data: {
+        liked: Fooder.getSelected(),
+        disliked: Fooder.getDisliked()
+      }
     })
     .then(function(res){
       console.log('change user liked pics', res);
@@ -82,6 +103,7 @@ angular.module('Appeteyes.controllers', [])
   //Sets up default Settings for Category:Food / Location:San Francisco
   $scope.getPics('food','san-francisco', $scope.offset);
   console.log($scope.pics);
+
 })
 
 .controller('FriendsCtrl', function($scope, Fooder) {
@@ -93,13 +115,16 @@ angular.module('Appeteyes.controllers', [])
   console.log($scope.food);
 })
 
-.controller('AccountCtrl', function($scope, Auth) {
+.controller('AccountCtrl', function($scope, Auth, Fooder) {
   //$scope.user.username and $scope.user.password are being used as ng-models on the template URL tab-account
   $scope.user = {};
   console.log('Form');
 
   $scope.submitForm = function(){
     Auth.login($scope.user);
+    Preferences.getLiked(function(priorLikes){
+      Fooder.setLikes(priorLikes);
+    });
   };
 
   $scope.signUp = function(){

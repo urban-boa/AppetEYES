@@ -26,9 +26,9 @@ exports.refinedSearch = function(req, res) {
       console.log('This is your data',result['businesses'][i].image_url.replace('ms.jpg','l.jpg'),result['businesses'][i].id);
       arr.push({
         link:result.businesses[i].image_url.replace('ms.jpg','l.jpg'),
-        name:result['businesses'][i].id,
-        phone:result['businesses'][i].display_phone,
-        adress:result['businesses'][i].location.adress,
+        name:result['businesses'][i].name,
+        phone:result['businesses'][i].phone,
+        address:result['businesses'][i].location.display_address,
         mobileUrl:result['businesses'][i].mobile_url,
         rating:result['businesses'][i].rating_img_url_small,
         neighborhoods:result['businesses'][i].location.neighborhoods,
@@ -36,6 +36,6 @@ exports.refinedSearch = function(req, res) {
       });
     }
     console.log(arr);
-    return res.json(200,arr);
+    return res.json(200, arr);
   });
 };

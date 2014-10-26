@@ -31,22 +31,31 @@ angular.module('Appeteyes.services', [])
 .factory('Fooder',function(){
 
   var selected = [];
+  var disliked = [];
   var picArr = [];
 
   return {
+    isNotLoaded:true,
     addPics:function(arr){
       picArr = arr;
     },
     currentPics:function(){
       return picArr;
     },
-    isNotLoaded:true,
-
     addToSelection:function(image){
       selected.push(image);
     },
+    addToDisliked:function(image){
+      disliked.push(image);
+    },
     getSelected:function(){
       return selected;
+    },
+    getDisliked:function(){
+      return disliked;
+    },
+    setLiked: function(priorLikes){
+      selected = priorLikes;
     },
     searchFood:function(name){
       for(var i = 0;i < selected.length;i++ ){
@@ -55,10 +64,10 @@ angular.module('Appeteyes.services', [])
         }
       }
       return {
-            name:'Not Found'
-        };
-      }
-    };
+        name:'Not Found'
+      };
+    }
+  };
 })
 
 .factory('Yelper',function($http){
@@ -70,7 +79,6 @@ angular.module('Appeteyes.services', [])
       console.log('This is the thin',parsedLoc);
       var yelpUrl = category + '*' + parsedLoc + '*' + offset;
       return $http.get('/yelp/' + yelpUrl);
-      
     },
     pics: function(){
       // return pictures;
@@ -200,7 +208,20 @@ angular.module('Appeteyes.services', [])
 
       console.log('now I just send a post');
       console.log(userPreferences);
-      
+    },
+
+    getLiked: function(callback){
+      $http({
+        method: 'GET',
+        url: '/users/likes'
+      })
+      .then(function(result){
+        callback(result);
+      })
+      .catch(function(error){
+        console.log('error in getting liked pictures', error);
+      });
     }
+
   };
 });

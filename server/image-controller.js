@@ -1,7 +1,7 @@
 var Q = require('q');
 var mongoose = require('mongoose');
-var image = require('./image-model.js');
-var restaurant = require('./restaurant-model.js');
+var Image = require('./image-model.js');
+var Restaurant = require('./restaurant-model.js');
 
 module.exports = {
 
@@ -9,31 +9,46 @@ module.exports = {
 
     //request body should contain an array of restaurants
     //returned by the yelp search API
-    var searchResults = req.body.businesses;
+    var searchResults = req.body.data;
 
     var findRestaurant = Q.nbind(Restaurant.findOne, Restaurant);
     var createRestaurant = Q.nbind(Restaurant.create, Restaurant);
 
-    for (var i = 0; i < searchResults.length; i++) {
-      var restaurant = {
-        url: searchResults[i].url,
-        restaurantName: searchResults[i].name,
-        address: searchResults[i].join(' \n'),
-        phoneNumber: searchResults[i].display_phone
-      };
-      findRestaurant({url: restaurant.url})
+    var saveSingleRestaurant = function(newRestaurant){
+
+      if (newRestaurant) {
+
+        var restaurant = {
+          url: newRestaurant.mobileUrl,
+          restaurantName: newRestaurant.name,
+          address: newRestaurant.address.join(' \n'),
+          phoneNumber: newRestaurant.phone
+        };
+
+        findRestaurant({url: restaurant.url})
         .then(function(result){
           if (!result) {
             return createRestaurant(restaurant);
           }
         })
         .then(function(result){
-          saveImage(searchResults[i].image_url, result.ObjectId);
+          if (result) {
+            return module.exports.saveImage(newRestaurant.link, result.ObjectId);
+          }
+        })
+        .then(function(image){
+          saveSingleRestaurant(searchResults.shift());
         })
         .fail(function(error){
+          console.log('Error in saving a restaurant result ', error);
           next(error);
         });
-    }
+
+      }
+
+    };
+
+    saveSingleRestaurant(searchResults.shift());
 
   },
 

@@ -14,16 +14,23 @@ module.exports = {
 
     //request object should have a body that contains
     //newly liked/disliked images arrays
-
+    console.log('Saving user likes');
     findUser({username:username})// Combine locally stored liked/disliked images, then save to database.
       .then(function(user){
         if (!user) {
           next(new Error('user does not exist.'));
         } else {
-          user.likedImages = user.likedImages.concat(req.body.liked);
-          user.dislikedImages = user.likedImages.concat(req.body.disliked);
-          user.save(function(error){ // 
-            next(error);
+          processImages(req.body.liked, function(newLikedImages){
+            user.likedImages = newLikedImages;
+            user.save(function(error){
+              next(error);
+            });
+          });
+          processImages(req.body.disliked, function(newDislikedImages){
+            user.dislikedImages = newDislikedImages;
+            user.save(function(error){
+              next(error);
+            });
           });
           res.status(200).end();
         }
@@ -33,37 +40,56 @@ module.exports = {
       });
   },
 
-  getUserLikes: function(req, res, next){ // retrieve likes from DB
+  getUserLikes: function(req, res, next){ 
+    // retrieve likes from DB
+    
     //req.username is set by the middleware user.decode
     var username = req.username;
-    var findUser = Q.nbind(User.findOne, User); // REPEATS: SHOULD WE REFACTOR THESE?
+    var findUser = Q.nbind(User.findOne, User); 
     var findImage = Q.nbind(Image.findOne, Image);
+    var findRestaurant = Q.nbind(Restaurant.findOne, Restaurant);
 
     findUser({username:username})
       .then(function(user){
+
         if (!user) {
           next(new Error('user does not exist.'));
         } else {
-          var urls = [];
+
+          var savedLikes = [];
           var likedImages = user.likedImages;
-          for (var i = 0; i < likedImages.length; i++){
-            findImage({ObjectId: likedImages[i]})
-              .then(function(image){
-                if (!image) {
-                  console.log('Image not found in getUserLikes');
+
+          var findOneRestaurant = function(imageId){
+            findImage({ObjectId: imageId})
+            .then(function(image){
+              if (!image) {
+                console.log('Image not found in getUserLikes');
+              } else {
+                return image.restaurantID;
+              }              
+            })
+            .then(function(ObjectId){
+              findRestaurant({ObjectId: ObjectId})
+              .then(function(restaurant){
+                savedLikes.push(restaurant);
+                if (savedLikes.length === likedImages.length){
+                  res.json(savedLikes);
                 } else {
-                  urls.push(image.url);
+                  findOneRestaurant(likedImages.shift());
                 }
               })
-              .then(function(){
-                res.json(urls);
-              })
-              .fail(function(error){
-                next(error);
-              })
-          }//end for-loop
+            })
+            .fail(function(error){
+              console.log('getUserLike error', error);
+            })
+          };
+
+          findOneRestaurant(likedImages.shift());
+
         }//end if-else
+
       });
+
   },
 
   changeUserPreferences: function(req, res, next){ // Save the user's last search preferences to DB
@@ -146,5 +172,32 @@ module.exports = {
       });
 
   }
+
+};
+
+var processImages = function(imageArray, callback){
+  //this function takes an array of image urls
+  //and looks them up in the images collection
+  //and returns a list of imageIDs
+
+  var IDs = [];
+  var findImage = Q.nbind(Image.findOne, Image);
+
+  var processOneImage = function(imageURL){
+    findImage({url: imageURL})
+    .then(function(image){
+      IDs.push(image.ObjectId);
+      if (IDs.length === imageArray.length){
+        callback(IDs); 
+      } else {
+        processOneImage(imageArray.shift().link);
+      }
+    })
+    .fail(function(error){
+      console.log('find image error', error);
+    })
+  };
+
+  processOneImage(imageArray.shift().link);
 
 };
