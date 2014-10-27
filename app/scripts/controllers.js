@@ -9,7 +9,10 @@ angular.module('Appeteyes.controllers', [])
 	//Gets information about the current session. If the user already has loaded pictures, it prevents the App from making another Yelp Request
 	$scope.isNotLoaded = Fooder.isNotLoaded;
 	$scope.like = 'Start Swipin';
-	$scope.offset = 0;
+  if(Fooder.isNotLoaded){
+    $scope.offset = 0;
+    $scope.pics = [];
+  }
 	$scope.sliding = function(direction){
 		if(direction === 'left'){
 			$scope.mood = '"button-assertive"';
@@ -114,7 +117,6 @@ angular.module('Appeteyes.controllers', [])
   $scope.importUserPreferences = function(token){
     //uncommenting when importing from factory/server works
     //get token from local storage
-    var localToken = Auth.getToken();
     $scope.userPreferences = Preferences.importPreferences(localToken);
     console.log('user prefs pulled from db on load', $scope.userPreferences);
 
@@ -139,7 +141,6 @@ angular.module('Appeteyes.controllers', [])
       $scope.locationInput = $scope.userPreferences.location;
     }
   };
-  $scope.importUserPreferences('abc');
 
   //an array of objects that populates the preferences tab
   $scope.preferencesList = [
