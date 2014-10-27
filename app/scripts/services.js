@@ -63,7 +63,7 @@ angular.module('Appeteyes.services', [])
     })
     .then(function (resp) {
       if (resp.data.token) {
-        $state.transitionTo('tab.appetyes');
+        $state.transitionTo('tab.appeteyes');
       } else {
         $state.transitionTo('tab.account');
       }
