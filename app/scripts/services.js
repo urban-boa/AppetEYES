@@ -63,7 +63,7 @@ angular.module('Appeteyes.services', [])
     })
     .then(function (resp) {
       if (resp.data.token) {
-        $state.transitionTo('tab.myFoodies');
+        $state.transitionTo('tab.appetyes');
       } else {
         $state.transitionTo('tab.account');
       }
@@ -79,7 +79,7 @@ angular.module('Appeteyes.services', [])
     })
     .then(function (resp) {
       setToken(resp.data.token);
-      if (resp.data.token) $state.transitionTo('tab.myFoodies');
+      if (resp.data.token) $state.transitionTo('tab.appeteyes');
     });
   };
 
