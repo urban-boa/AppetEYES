@@ -82,7 +82,7 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
     .state('tab.foodDetail', {
       url: '/myFoodies/{name}',
       views: {
-        'foodDetail': {
+        'tab-myFoodies': {
           templateUrl: 'templates/foodDetail.html',
           controller: 'FoodDetailCtrl'
         }
