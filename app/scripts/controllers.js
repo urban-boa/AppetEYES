@@ -1,7 +1,7 @@
 'use strict';
 angular.module('Appeteyes.controllers', [])
 
-.controller('DashCtrl',function($scope,Fooder, Yelper, $http) {
+.controller('AppeteyesCtrl',function($scope,Fooder, Yelper, $http) {
   //Local Cache with Response from the Yelp API
   $scope.pics = Fooder.currentPics()||[];
   //Used to Store the current picture
@@ -103,14 +103,13 @@ angular.module('Appeteyes.controllers', [])
   //Sets up default Settings for Category:Food / Location:San Francisco
   $scope.getPics('food','san-francisco', $scope.offset);
   console.log($scope.pics);
-
 })
 
-.controller('FriendsCtrl', function($scope, Fooder) {
+.controller('MyFoodiesCtrl', function($scope, Fooder) {
   $scope.foods = Fooder.getSelected();
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Fooder) {
+.controller('FoodDetailCtrl', function($scope, $stateParams, Fooder) {
   $scope.food = Fooder.searchFood($stateParams.name);
   console.log($scope.food);
 })

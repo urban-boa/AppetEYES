@@ -50,12 +50,12 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
 
     // Each tab has its own nav history stack:
 
-    .state('tab.dash', {
-      url: '/dash',
+    .state('tab.appeteyes', {
+      url: '/appeteyes',
       views: {
-        'tab-dash': {
-          templateUrl: 'templates/tab-dash.html',
-          controller: 'DashCtrl'
+        'tab-appeteyes': {
+          templateUrl: 'templates/tab-appeteyes.html',
+          controller: 'AppeteyesCtrl'
         }
       },
       authenticate:true
@@ -69,23 +69,23 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
       // controller:'DashCtrl'
     })
 
-    .state('tab.friends', {
-      url: '/friends',
+    .state('tab.myFoodies', {
+      url: '/myFoodies',
       views: {
-        'tab-friends': {
-          templateUrl: 'templates/tab-friends.html',
-          controller: 'FriendsCtrl'
+        'tab-myFoodies': {
+          templateUrl: 'templates/tab-myFoodies.html',
+          controller: 'MyFoodiesCtrl'
         }
       },
       authenticate:true
     })
 
-    .state('tab.friend-detail', {
-      url: '/tab/myfoodies/{name}',
+    .state('tab.foodDetail', {
+      url: '/myFoodies/{name}',
       views: {
-        'tab-friends': {
-          templateUrl: 'templates/friend-detail.html',
-          controller: 'FriendDetailCtrl'
+        'foodDetail': {
+          templateUrl: 'templates/foodDetail.html',
+          controller: 'FoodDetailCtrl'
         }
       }
     })
@@ -111,7 +111,7 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/appeteyes');
 
   //We add $httpInterceptor into the array
   $httpProvider.interceptors.push('AttachTokens');
