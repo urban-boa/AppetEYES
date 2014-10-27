@@ -137,7 +137,7 @@ angular.module('Appeteyes.services', [])
 
   //object to be updated by controller based on user input. Later to be sent to server.
   var userPreferences = {
-    cuisines: [],
+    cuisines: ['food'],
     location: '',
   };
 
