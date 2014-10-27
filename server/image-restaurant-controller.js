@@ -56,7 +56,7 @@ module.exports = {
           next(new Error('user does not exist.'));
         } else {
 
-          var savedLikes = [];
+          var savedLikes = {};
           var likedImages = user.likedImages;
 
           console.log('LIKEDIMAGES!!!!!!!!!! ', likedImages);
@@ -73,9 +73,9 @@ module.exports = {
             .then(function(restaurantID){
               findRestaurant({_id: restaurantID})
               .then(function(restaurant){
-                savedLikes.push(restaurant);
-                if (savedLikes.length === likedImages.length){
-                  res.json(savedLikes);
+                savedLikes[restaurant.restaurantName] = restaurant;
+                if (Object.keys(savedLikes).length === likedImages.length){
+                  res.status(200).json(savedLikes);
                 } else {
                   findOneRestaurant(likedImages.shift());
                 }
