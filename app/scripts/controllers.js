@@ -74,10 +74,10 @@ angular.module('Appeteyes.controllers', [])
   $scope.foods = Fooder.getSelected();
 })
 
-// .controller('FriendDetailCtrl', function($scope, $stateParams, Fooder) {
-//   $scope.food = Fooder.searchFood($stateParams.name);
-//   console.log($scope.food);
-// })
+.controller('FoodDetailCtrl', function($scope, $stateParams, Fooder) {
+  $scope.food = Fooder.searchFood($stateParams.name);
+  console.log($scope.food);
+})
 
 .controller('AccountCtrl', function($scope, Auth) {
 	//$scope.user.username and $scope.user.password are being used as ng-models on the template URL tab-account

@@ -79,6 +79,16 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
       authenticate:true
     })
 
+    .state('tab.foodDetail', {
+      url: '/tab/myfoodies/{name}',
+      views: {
+        'tab-foodDetail': {
+          templateUrl: 'templates/foodDetail.html',
+          controller: 'FoodDetailCtrl'
+        }
+      }
+    })
+
     .state('tab.account', {
       url: '/account',
       views: {
@@ -104,7 +114,7 @@ angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appete
   $urlRouterProvider.otherwise('/tab/appeteyes');
 
   //We add $httpInterceptor into the array
-  //$httpProvider.httpInterceptor.push('AttachTokens');
+  //$httpProvider.httpInterceptors.push('AttachTokens');
 })
 
 // .factory('AttachTokens', function ($window) {
