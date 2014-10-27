@@ -157,7 +157,6 @@ angular.module('Appeteyes.controllers', [])
   $scope.importUserPreferences = function(){
     //uncommenting when importing from factory/server works
     //get token from local storage
-    var localToken = Auth.getToken();
     $scope.userPreferences = Preferences.importPreferences(localToken);
     console.log('user prefs pulled from db on load', $scope.userPreferences);
 
@@ -183,7 +182,10 @@ angular.module('Appeteyes.controllers', [])
       $scope.locationInput = $scope.userPreferences.location;
     }
   };
+<<<<<<< HEAD
   $scope.importUserPreferences();
+=======
+>>>>>>> 225c5c46e03ca7b63f898a4ec35c313c464256e7
 
   //an array of objects that populates the preferences tab
   $scope.preferencesList = [
