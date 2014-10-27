@@ -75,6 +75,9 @@ angular.module('Appeteyes.services', [])
     .then(function (resp) {
       if (resp.data.token) {
         $state.transitionTo('tab.appeteyes');
+        Preferences.getLiked(function(priorLikes){
+          Fooder.setLikes(priorLikes);
+        });
       } else {
         $state.transitionTo('tab.account');
       }
@@ -90,12 +93,7 @@ angular.module('Appeteyes.services', [])
     })
     .then(function (resp) {
       setToken(resp.data.token);
-      if (resp.data.token) {
-        $state.transitionTo('tab.appeteyes');
-        Preferences.getLiked(function(priorLikes){
-          Fooder.setLikes(priorLikes);
-        });
-      }
+      if (resp.data.token) $state.transitionTo('tab.appeteyes');
     });
   };
 
@@ -170,11 +168,11 @@ angular.module('Appeteyes.services', [])
     importPreferences: function(){
 
       //send GET request to server - use response data to fill userSettings
-      var promise = $http.get('/users/preferences')
+      $http.get('/users/preferences')
         .then(function(data){
           console.log('data immediately from GET', data);
-          userPreferences.cuisines = data.cuisines;
-          userPreferences.location = data.location;
+          userPreferences.cuisines = data.data.cuisines;
+          userPreferences.location = data.data.location;
         })
         .catch(function(error){
           console.log('error in importing preferences ', error);

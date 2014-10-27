@@ -154,7 +154,7 @@ angular.module('Appeteyes.controllers', [])
     'Cuisines': {}
   };
 
-  $scope.importUserPreferences = function(token){
+  $scope.importUserPreferences = function(){
     //uncommenting when importing from factory/server works
     //get token from local storage
     var localToken = Auth.getToken();
@@ -183,7 +183,7 @@ angular.module('Appeteyes.controllers', [])
       $scope.locationInput = $scope.userPreferences.location;
     }
   };
-  $scope.importUserPreferences('abc');
+  $scope.importUserPreferences();
 
   //an array of objects that populates the preferences tab
   $scope.preferencesList = [
