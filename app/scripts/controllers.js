@@ -12,6 +12,7 @@ angular.module('Appeteyes.controllers', [])
   if(Fooder.isNotLoaded){
     $scope.offset = 0;
     $scope.pics = [];
+    console.log('is Not Loaded!!!!!!!!');
   }
 	$scope.sliding = function(direction){
 		if(direction === 'left'){
