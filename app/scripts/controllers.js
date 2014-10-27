@@ -68,6 +68,8 @@ angular.module('Appeteyes.controllers', [])
   $scope.cuisines = Preferences.preferences().cuisines || ['food'];
   $scope.location = Preferences.preferences().location || 'San-Francisco';
 
+  console.log("TestTTTTT", $scope.cuisines, $scope.location);
+
 	//Sets up default Settings for Category:Food / Location:San Francisco
 	$scope.getPics($scope.cuisines[0],$scope.location, $scope.offset);
 	console.log($scope.pics);
