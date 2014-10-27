@@ -84,8 +84,7 @@ angular.module('Appeteyes.services', [])
   };
 
   var isAuth = function () {
-    //return !!$window.localStorage.getItem(tokenKey);
-    return true;
+    return !!$window.localStorage.getItem(tokenKey);
   };
 
   var signout = function () {
