@@ -3,7 +3,7 @@ angular.module('Appeteyes.services', [])
 
 .factory('Fooder',function(){
 
-  var selected = [];
+  var selected = {};
   var picArr = [];
 
   return {
@@ -16,7 +16,8 @@ angular.module('Appeteyes.services', [])
     isNotLoaded:true,
 
     addToSelection:function(image){
-      selected.push(image);
+      selected[image.name] = image;
+      console.log(selected);
     },
     getSelected:function(){
       return selected;
