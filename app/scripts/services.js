@@ -4,8 +4,8 @@ angular.module('Appeteyes.services', [])
 .factory('Fooder',function(){
 
 
-  var selected = [];
-  var disliked = [];
+  var selected = {};
+  var disliked = {};
   var picArr = [];
 
   return {
@@ -21,7 +21,8 @@ angular.module('Appeteyes.services', [])
       console.log(selected);
     },
     addToDisliked:function(image){
-      disliked.push(image);
+      disliked[image.name] = image;
+      console.log(disliked);
     },
     getSelected:function(){
       return selected;
@@ -42,7 +43,7 @@ angular.module('Appeteyes.services', [])
         return selected[name];
       } 
     }
-    };
+  };
 })
 
 .factory('Yelper',function($http){
@@ -151,7 +152,7 @@ angular.module('Appeteyes.services', [])
 
   //object to be updated by controller based on user input. Later to be sent to server.
   var userPreferences = {
-    cuisines: [],
+    cuisines: ['food'],
     location: '',
   };
 

@@ -106,6 +106,7 @@ angular.module('Appeteyes.controllers', [])
   });
 
   console.log('Preferences.preferences()', Preferences.preferences());
+
   $scope.cuisines = Preferences.preferences().cuisines;
   $scope.location = Preferences.preferences().location || 'San-Francisco';
 
