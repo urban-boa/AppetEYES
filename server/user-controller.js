@@ -51,7 +51,9 @@ module.exports = {
           create = Q.nbind(User.create, User);
           newUser = {
             username: username,
-            password: password
+            password: password,
+            cuisines: [],
+            location: 'San Francisco'
           };
           return create(newUser);
         }

@@ -110,8 +110,10 @@ module.exports = {
         if (!user) {
           next(new Error('user does not exist.'));
         } else {
+          console.log('!!!!!!!!!!!!!!!', newPrefs.cuisines);
           user.location = newPrefs.location;
-          user.cusines = newPrefs.cusines;
+          user.cuisines = newPrefs.cuisines;
+          console.log('USER', user);
           user.save(function(error){
             next(error);
           });
@@ -137,7 +139,7 @@ module.exports = {
           next(new Error('user does not exist.'));
         } else {
           res.json({
-            cusines: user.cusines,
+            cuisines: user.cuisines,
             location: user.location
           });
         }
