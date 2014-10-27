@@ -9,7 +9,6 @@ angular.module('Appeteyes.controllers', [])
 	//Gets information about the current session. If the user already has loaded pictures, it prevents the App from making another Yelp Request
 	$scope.isNotLoaded = Fooder.isNotLoaded;
 	$scope.like = 'Start Swipin';
-  if ()
 	$scope.offset = 0;
 	$scope.sliding = function(direction){
 		if(direction === 'left'){
