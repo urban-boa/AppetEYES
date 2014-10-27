@@ -33,7 +33,7 @@ module.exports = {
   },//end signin
 
   signup: function (req, res, next) {
-
+    console.log('Imma signing up');
     var username  = req.body.username,
         password  = req.body.password,
         create,
