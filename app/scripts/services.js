@@ -147,6 +147,10 @@ angular.module('Appeteyes.services', [])
       return cuisines;
     },
 
+    preferences: function(){
+      return userPreferences;
+    },
+
     //retrieves stored user preferences from server/db
     importPreferences: function(){
 
