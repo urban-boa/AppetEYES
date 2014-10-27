@@ -1,7 +1,7 @@
 'use strict';
 angular.module('Appeteyes.controllers', [])
 
-.controller('DashCtrl',function($scope,Fooder,Yelper) {
+.controller('AppeteyesCtrl',function($scope,Fooder,Yelper) {
 	//Local Cache with Response from the Yelp API
 	$scope.pics = Fooder.currentPics()||[];
 	//Used to Store the current picture
@@ -70,14 +70,14 @@ angular.module('Appeteyes.controllers', [])
 	console.log($scope.pics);
 })
 
-.controller('FriendsCtrl', function($scope, Fooder) {
+.controller('MyFoodiesCtrl', function($scope, Fooder) {
   $scope.foods = Fooder.getSelected();
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Fooder) {
-  $scope.food = Fooder.searchFood($stateParams.name);
-  console.log($scope.food);
-})
+// .controller('FriendDetailCtrl', function($scope, $stateParams, Fooder) {
+//   $scope.food = Fooder.searchFood($stateParams.name);
+//   console.log($scope.food);
+// })
 
 .controller('AccountCtrl', function($scope, Auth) {
 	//$scope.user.username and $scope.user.password are being used as ng-models on the template URL tab-account
