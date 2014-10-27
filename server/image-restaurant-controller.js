@@ -14,7 +14,6 @@ module.exports = {
 
     //request object should have a body that contains
     //newly liked/disliked images arrays
-    console.log('Saving user likes');
     findUser({username:username})// Combine locally stored liked/disliked images, then save to database.
       .then(function(user){
         if (!user) {
@@ -25,13 +24,14 @@ module.exports = {
             user.save(function(error){
               next(error);
             });
-          });
-          processImages(req.body.disliked, function(newDislikedImages){
-            user.dislikedImages = newDislikedImages;
-            user.save(function(error){
-              next(error);
+            processImages(req.body.disliked, function(newDislikedImages){
+              user.dislikedImages = newDislikedImages;
+              user.save(function(error){
+                next(error);
+              });
             });
           });
+
           res.status(200).end();
         }
       })
@@ -59,8 +59,10 @@ module.exports = {
           var savedLikes = [];
           var likedImages = user.likedImages;
 
+          console.log('LIKEDIMAGES!!!!!!!!!! ', likedImages);
+
           var findOneRestaurant = function(imageId){
-            findImage({ObjectId: imageId})
+            findImage({_id: imageId})
             .then(function(image){
               if (!image) {
                 console.log('Image not found in getUserLikes');
@@ -68,8 +70,8 @@ module.exports = {
                 return image.restaurantID;
               }              
             })
-            .then(function(ObjectId){
-              findRestaurant({ObjectId: ObjectId})
+            .then(function(restaurantID){
+              findRestaurant({_id: restaurantID})
               .then(function(restaurant){
                 savedLikes.push(restaurant);
                 if (savedLikes.length === likedImages.length){
@@ -92,7 +94,8 @@ module.exports = {
 
   },
 
-  changeUserPreferences: function(req, res, next){ // Save the user's last search preferences to DB
+  changeUserPreferences: function(req, res, next){ 
+  // Save the user's last search preferences to DB
     //req.username is set by the middleware user.decode
     var username = req.username;
     //request should have new preferences in its body
@@ -120,7 +123,8 @@ module.exports = {
       });
   },
 
-  getUserPreferences: function(req, res, next){ // Retrieves the user's last search preferences to DB
+  getUserPreferences: function(req, res, next){ 
+  // Retrieves the user's last search preferences to DB
     //req.username is set by the middleware user.decode
     var username = req.username;
     var findOne = Q.nbind(User.findOne, User);
@@ -143,18 +147,19 @@ module.exports = {
       });
   },
 
-  getRestaurantInfo: function(req, res, next){ // Retrieve restaurant info based on the image selected
+  getRestaurantInfo: function(req, res, next){ 
+  // Retrieve restaurant info based on the image selected
     //request body should contain the ImageID
     var imageID = req.body.imageID;
     var findImage = Q.nbind(Image.findOne, Image);
     var findRestaurant = Q.nbind(Restaurant.findOne, Restaurant);
 
-    findImage({ObjectId: imageID})
+    findImage({_id: imageID})
       .then(function(image){
         if (!image) {
           next(new Error('image does not exist.'));
         } else {
-          return findRestaurant({ObjectId: image.restaurantID})
+          return findRestaurant({_id: image.restaurantID})
         }
       })
       .then(function(restaurant){
@@ -175,30 +180,34 @@ module.exports = {
 };
 
 var processImages = function(imageArray, callback){
-  //this function takes an array of image urls
-  //and looks them up in the images collection
-  //and returns a list of imageIDs
+//this function takes an array of image urls
+//and looks them up in the images collection
+//and returns a list of imageIDs
 
   var IDs = [];
   var findImage = Q.nbind(Image.findOne, Image);
-  var numImages = imageArray.length; 
-  console.log('IMAGE ARRAY!!!!!!!!', imageArray);
+  var numImages = imageArray.length;
+
   var processOneImage = function(imageURL){
-    console.log('PROCESS ONE IMAGE!!!!!!!!!!', imageURL);
+
     findImage({url: imageURL})
     .then(function(image){
-      IDs.push(image.ObjectId);
-      if (IDs.length === numImages){
+      if (image){
+        IDs.push(image._id);
+      }
+      if (imageArray.length === 0){
         callback(IDs); 
       } else {
-        if (imageArray.length > 0) processOneImage(imageArray.shift().link);
+        var nextImage = imageArray.shift()
+        if (imageArray.length >= 0) processOneImage(nextImage.link);
       }
     })
     .fail(function(error){
       console.log('find image error', error);
-    })
+    });
   };
 
-  if (imageArray.length > 0) processOneImage(imageArray.shift().link);
+  var firstImage = imageArray.shift();
+  if (imageArray.length > 0) processOneImage(firstImage.link);
 
 };

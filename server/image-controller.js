@@ -33,7 +33,7 @@ module.exports = {
         })
         .then(function(result){
           if (result) {
-            return module.exports.saveImage(newRestaurant.link, result.ObjectId);
+            return module.exports.saveImage(newRestaurant.link, result._id);
           }
         })
         .then(function(image){
@@ -43,6 +43,10 @@ module.exports = {
           console.log('Error in saving a restaurant result ', error);
           next(error);
         });
+
+      } else {
+
+        res.status(200).end();
 
       }
 

@@ -75,7 +75,7 @@ angular.module('Appeteyes.controllers', [])
           console.log(res.status);
         })
         .catch(function(error){
-          console.log('')
+          console.log('$scope.getPics error', error);
         })
       },function(error){
         console.log(error);
