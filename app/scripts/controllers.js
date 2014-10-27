@@ -65,7 +65,7 @@ angular.module('Appeteyes.controllers', [])
 		}
 	};
 
-  $scope.cuisines = Preferences.preferences().cuisines || 'food';
+  $scope.cuisines = Preferences.preferences().cuisines || ['food'];
   $scope.location = Preferences.preferences().location || 'San-Francisco';
 
 	//Sets up default Settings for Category:Food / Location:San Francisco
