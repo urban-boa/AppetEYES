@@ -9,6 +9,7 @@ angular.module('Appeteyes.controllers', [])
 	//Gets information about the current session. If the user already has loaded pictures, it prevents the App from making another Yelp Request
 	$scope.isNotLoaded = Fooder.isNotLoaded;
 	$scope.like = 'Start Swipin';
+  if ()
 	$scope.offset = 0;
 	$scope.sliding = function(direction){
 		if(direction === 'left'){
@@ -103,7 +104,7 @@ angular.module('Appeteyes.controllers', [])
 
 })
 
-.controller('PreferencesCtrl', function($scope, Preferences, Auth) {
+.controller('PreferencesCtrl', function($scope, Preferences, Auth, Fooder) {
 
   //an object that holds the state of what is currently selected
   $scope.selectedOption = {
@@ -210,6 +211,7 @@ angular.module('Appeteyes.controllers', [])
   // //which will in turn send to server
   $scope.saveTheSettings = function(){
     //populate userPreferences object with selected cuisine options
+    Fooder.isNotLoaded = true;
     $scope.userPreferences.cuisines = [];
     for (var key in $scope.selectedOption.Cuisines){
       $scope.userPreferences.cuisines.push(key);
