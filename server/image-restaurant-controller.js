@@ -42,7 +42,7 @@ module.exports = {
 
   getUserLikes: function(req, res, next){ 
     // retrieve likes from DB
-    
+
     //req.username is set by the middleware user.decode
     var username = req.username;
     var findUser = Q.nbind(User.findOne, User); 
@@ -99,7 +99,7 @@ module.exports = {
     //it should be stored in a property called "newPreferences"
     //which should be an object
     var newPrefs = req.body;
-    var findOne = Q.nbind(User.findOne, User); //REPEAT
+    var findOne = Q.nbind(User.findOne, User); 
 
     //update the existing 
     findOne({username:username})
@@ -109,11 +109,10 @@ module.exports = {
         } else {
           user.location = newPrefs.location;
           user.cusines = newPrefs.cusines;
-          user.price = newPrefs.price;
           user.save(function(error){
             next(error);
           });
-          res.status(200).end();
+          res.status(200).end('Preferences saved');
         }
       })
       .fail(function(error){
@@ -182,15 +181,17 @@ var processImages = function(imageArray, callback){
 
   var IDs = [];
   var findImage = Q.nbind(Image.findOne, Image);
-
+  var numImages = imageArray.length; 
+  console.log('IMAGE ARRAY!!!!!!!!', imageArray);
   var processOneImage = function(imageURL){
+    console.log('PROCESS ONE IMAGE!!!!!!!!!!', imageURL);
     findImage({url: imageURL})
     .then(function(image){
       IDs.push(image.ObjectId);
-      if (IDs.length === imageArray.length){
+      if (IDs.length === numImages){
         callback(IDs); 
       } else {
-        processOneImage(imageArray.shift().link);
+        if (imageArray.length > 0) processOneImage(imageArray.shift().link);
       }
     })
     .fail(function(error){
@@ -198,6 +199,6 @@ var processImages = function(imageArray, callback){
     })
   };
 
-  processOneImage(imageArray.shift().link);
+  if (imageArray.length > 0) processOneImage(imageArray.shift().link);
 
 };

@@ -122,9 +122,6 @@ angular.module('Appeteyes.controllers', [])
 
   $scope.submitForm = function(){
     Auth.login($scope.user);
-    Preferences.getLiked(function(priorLikes){
-      Fooder.setLikes(priorLikes);
-    });
   };
 
   $scope.signUp = function(){

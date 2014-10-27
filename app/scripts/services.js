@@ -86,7 +86,7 @@ angular.module('Appeteyes.services', [])
   };
 })
 
-.factory('Auth', function ($http, $location, $window, $state) {
+.factory('Auth', function ($http, $location, $window, $state, Preferences) {
 
   var tokenKey = 'com.appeteyes'
 
@@ -114,7 +114,12 @@ angular.module('Appeteyes.services', [])
     })
     .then(function (resp) {
       setToken(resp.data.token);
-      if (resp.data.token) $state.transitionTo('tab.dash');
+      if (resp.data.token) {
+        $state.transitionTo('tab.dash');
+        Preferences.getLiked(function(priorLikes){
+          Fooder.setLikes(priorLikes);
+        });
+      }
     });
   };
 
@@ -191,9 +196,9 @@ angular.module('Appeteyes.services', [])
           userPreferences.cuisines = data.cuisines;
           userPreferences.location = data.location;
         })
-        // .error(function(error){
-        //   console.log(error);
-        // })
+        .catch(function(error){
+          console.log('error in importing preferences ', error);
+        });
 
       return userPreferences;
     },
