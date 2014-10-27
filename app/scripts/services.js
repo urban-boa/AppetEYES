@@ -33,16 +33,16 @@ angular.module('Appeteyes.services', [])
       selected = priorLikes;
     },
     searchFood:function(name){
-      for(var i = 0;i < selected.length;i++ ){
-        if(selected[i].name === name){
-          return selected[i];
-        }
-      }
-      return {
-        name:'Not Found'
-      };
+      console.log('Looking for this on selected',name);
+      if(selected[name]=== undefined){
+        return {
+            name:'Not Found'
+        };
+      }else{
+        return selected[name];
+      } 
     }
-  };
+    };
 })
 
 .factory('Yelper',function($http){
@@ -159,6 +159,10 @@ angular.module('Appeteyes.services', [])
     //takes an array as a parameter and outputs array to controller
     listCuisines: function(){
       return cuisines;
+    },
+
+    preferences: function(){
+      return userPreferences;
     },
 
     //retrieves stored user preferences from server/db

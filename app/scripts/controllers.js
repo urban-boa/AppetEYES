@@ -1,7 +1,8 @@
 'use strict';
 angular.module('Appeteyes.controllers', [])
 
-.controller('AppeteyesCtrl',function($scope,Fooder, Yelper, $http) {
+.controller('AppeteyesCtrl', function($scope,Fooder,Yelper, Preferences, $http) {
+
   //Local Cache with Response from the Yelp API
   $scope.pics = Fooder.currentPics()||[];
   //Used to Store the current picture
@@ -11,7 +12,7 @@ angular.module('Appeteyes.controllers', [])
   $scope.like = 'Start Swipin';
   //Offset ensures we don't keep repeating the same pictures or run out of pictures to show
   $scope.offset = 0;
-  
+
   $scope.sliding = function(direction){
     if(direction === 'left'){
       $scope.mood = '"button-assertive"';
@@ -28,7 +29,7 @@ angular.module('Appeteyes.controllers', [])
       $scope.hateIt = false;
       $scope.like = 'Start Swipin';
     }
-  };
+  } ;
 
   $scope.firstPic = function(){
     if ($scope.pics.length < 6) {
@@ -56,7 +57,8 @@ angular.module('Appeteyes.controllers', [])
   $scope.mood = '"button-positive"';
 
   //Wrapper for the Yelp Interaction
-  $scope.getPics = function(category,location, offset){
+  $scope.getPics = function(category, location, offset){
+
     if($scope.isNotLoaded){
       var promise = Yelper.search(category, location, offset);
       promise.then(function(data){
@@ -76,11 +78,12 @@ angular.module('Appeteyes.controllers', [])
         })
         .catch(function(error){
           console.log('$scope.getPics error', error);
-        })
+        });
       },function(error){
         console.log(error);
       });
     }
+
   };
 
   $scope.$on('$locationChangeStart', function(){
@@ -100,9 +103,15 @@ angular.module('Appeteyes.controllers', [])
     })
   });
 
+  $scope.cuisines = Preferences.preferences().cuisines || ['food'];
+  $scope.location = Preferences.preferences().location || 'San-Francisco';
+
+  console.log("TestTTTTT", $scope.cuisines, $scope.location);
+
   //Sets up default Settings for Category:Food / Location:San Francisco
-  $scope.getPics('food','san-francisco', $scope.offset);
+  $scope.getPics($scope.cuisines[0],$scope.location, $scope.offset);
   console.log($scope.pics);
+
 })
 
 .controller('MyFoodiesCtrl', function($scope, Fooder) {
