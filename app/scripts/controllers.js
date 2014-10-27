@@ -182,10 +182,6 @@ angular.module('Appeteyes.controllers', [])
       $scope.locationInput = $scope.userPreferences.location;
     }
   };
-<<<<<<< HEAD
-  $scope.importUserPreferences();
-=======
->>>>>>> 225c5c46e03ca7b63f898a4ec35c313c464256e7
 
   //an array of objects that populates the preferences tab
   $scope.preferencesList = [
