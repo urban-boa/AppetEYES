@@ -23,15 +23,15 @@ angular.module('Appeteyes.services', [])
       return selected;
     },
     searchFood:function(name){
-      for(var i = 0;i < selected.length;i++ ){
-        if(selected[i].name === name){
-          return selected[i];
-        }
-      }
-      return {
+      console.log('Looking for this on selected',name);
+      if(selected[name]=== undefined){
+        return {
             name:'Not Found'
         };
-      }
+      }else{
+        return selected[name];
+      } 
+    }
     };
 })
 
