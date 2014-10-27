@@ -90,7 +90,7 @@ angular.module('Appeteyes.services', [])
     .then(function (resp) {
       setToken(resp.data.token);
       if (resp.data.token) {
-        $state.transitionTo('tab.dash');
+        $state.transitionTo('tab.appeteyes');
         Preferences.getLiked(function(priorLikes){
           Fooder.setLikes(priorLikes);
         });

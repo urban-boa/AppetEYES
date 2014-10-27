@@ -1,8 +1,8 @@
 'use strict';
 angular.module('Appeteyes.controllers', [])
 
-.controller('AppeteyesCtrl', function($scope,Fooder,Yelper, Preferences, $http) {
-
+.controller('AppeteyesCtrl', function($scope, Fooder, Yelper, Preferences, $http) {
+  console.log('APPETEYES CONTROLLER RUNNING NOW');
   //Local Cache with Response from the Yelp API
   $scope.pics = Fooder.currentPics()||[];
   //Used to Store the current picture
@@ -87,6 +87,7 @@ angular.module('Appeteyes.controllers', [])
   };
 
   $scope.$on('$locationChangeStart', function(){
+
     $http({
       method: 'POST',
       url: '/users/likes',
@@ -101,15 +102,17 @@ angular.module('Appeteyes.controllers', [])
     .catch(function(error){
       console.log('error in changing user liked pics', error);
     })
+    
   });
 
-  $scope.cuisines = Preferences.preferences().cuisines || ['food'];
+  console.log('Preferences.preferences()', Preferences.preferences());
+  $scope.cuisines = Preferences.preferences().cuisines;
   $scope.location = Preferences.preferences().location || 'San-Francisco';
 
   console.log("TestTTTTT", $scope.cuisines, $scope.location);
 
   //Sets up default Settings for Category:Food / Location:San Francisco
-  $scope.getPics($scope.cuisines[0],$scope.location, $scope.offset);
+  $scope.getPics($scope.cuisines[0], $scope.location, $scope.offset);
   console.log($scope.pics);
 
 })
@@ -165,6 +168,7 @@ angular.module('Appeteyes.controllers', [])
 
     //pre-select options from imported preferences
     //set the imported cuisines
+    console.log('++++++++++++++++++++++++',  $scope.userPreferences);
     for (var i=0; i<$scope.userPreferences.cuisines.length; i++){
      $scope.selectedOption.Cuisines[$scope.userPreferences.cuisines[i]] = $scope.userPreferences.cuisines[i];
     }
