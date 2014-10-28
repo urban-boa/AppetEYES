@@ -30,8 +30,13 @@ angular.module('Appeteyes.services', [])
     getDisliked:function(){
       return disliked;
     },
+    resetPics:function(){
+      picArr = [];
+    },
     setLiked: function(priorLikes){
-      selected = priorLikes;
+      for (var key in priorLikes){
+        selected[key] = priorLikes[key];
+      }
     },
     searchFood:function(name){
       console.log('Looking for this on selected',name);
@@ -151,7 +156,7 @@ angular.module('Appeteyes.services', [])
   //object to be updated by controller based on user input. Later to be sent to server.
   var userPreferences = {
     cuisines: ['food'],
-    location: '',
+    location: 'San-Francisco'
   };
 
   return {
@@ -165,7 +170,7 @@ angular.module('Appeteyes.services', [])
     },
 
     //retrieves stored user preferences from server/db
-    importPreferences: function(){
+    importPreferences: function(callback){
 
       //send GET request to server - use response data to fill userSettings
       $http.get('/users/preferences')
@@ -173,12 +178,16 @@ angular.module('Appeteyes.services', [])
           console.log('data immediately from GET', data);
           userPreferences.cuisines = data.data.cuisines;
           userPreferences.location = data.data.location;
+          if (callback) {
+            callback(data.data);
+          }
         })
         .catch(function(error){
           console.log('error in importing preferences ', error);
         });
 
       return userPreferences;
+
     },
 
     //takes an object with all preferences saved

@@ -11,7 +11,7 @@ module.exports = {
     var username = req.username;
     var findUser = Q.nbind(User.findOne, User); // Creates a promisified function to find a single user based on a query
     var findImage = Q.nbind(Image.findOne, Image); // Creates a promisified function to find a single image based on a query
-
+    console.log('request object', req.body);
     //request object should have a body that contains
     //newly liked/disliked images arrays
     findUser({username:username})// Combine locally stored liked/disliked images, then save to database.
@@ -58,8 +58,7 @@ module.exports = {
 
           var savedLikes = {};
           var likedImages = user.likedImages;
-
-          console.log('LIKEDIMAGES!!!!!!!!!! ', likedImages);
+          var numLikedImages = likedImages.length;
 
           var findOneRestaurant = function(imageId){
             findImage({_id: imageId})
@@ -67,14 +66,25 @@ module.exports = {
               if (!image) {
                 console.log('Image not found in getUserLikes');
               } else {
-                return image.restaurantID;
+                console.log('Image found');
+                return [image.restaurantID, image.url];
               }              
             })
-            .then(function(restaurantID){
+            .then(function(imageTuple){
+
+              var restaurantID = imageTuple[0];
+              var imageUrl = imageTuple[1];
+
               findRestaurant({_id: restaurantID})
               .then(function(restaurant){
-                savedLikes[restaurant.restaurantName] = restaurant;
-                if (Object.keys(savedLikes).length === likedImages.length){
+                savedLikes[restaurant.restaurantName] = {
+                  name: restaurant.restaurantName,
+                  url: restaurant.url,
+                  city: restaurant.address,
+                  phone: restaurant.phoneNumber,
+                  link: imageUrl
+                };
+                if (Object.keys(savedLikes).length === numLikedImages){
                   res.status(200).json(savedLikes);
                 } else {
                   findOneRestaurant(likedImages.shift());
@@ -110,7 +120,6 @@ module.exports = {
         if (!user) {
           next(new Error('user does not exist.'));
         } else {
-          console.log('!!!!!!!!!!!!!!!', newPrefs.cuisines);
           user.location = newPrefs.location;
           user.cuisines = newPrefs.cuisines;
           console.log('USER', user);
@@ -156,12 +165,12 @@ module.exports = {
     var findImage = Q.nbind(Image.findOne, Image);
     var findRestaurant = Q.nbind(Restaurant.findOne, Restaurant);
 
-    findImage({_id: imageID})
+    findImage({_id: ObjectId(imageID)})
       .then(function(image){
         if (!image) {
           next(new Error('image does not exist.'));
         } else {
-          return findRestaurant({_id: image.restaurantID})
+          return findRestaurant({_id: ObjectId(image.restaurantID)})
         }
       })
       .then(function(restaurant){
@@ -181,23 +190,30 @@ module.exports = {
 
 };
 
-var processImages = function(imageArray, callback){
+var processImages = function(imageObject, callback){
 //this function takes an array of image urls
 //and looks them up in the images collection
 //and returns a list of imageIDs
 
   var IDs = [];
   var findImage = Q.nbind(Image.findOne, Image);
+  var imageArray = [];
+  console.log('IMAGE OBJECT', imageObject);
+  for (var key in imageObject){
+    if (imageObject[key] && imageObject[key] !== ''){
+      imageArray.push(imageObject[key]);
+    }
+  }
   var numImages = imageArray.length;
-
+  console.log('IMAGE ARRAY', imageArray);
   var processOneImage = function(imageURL){
-
     findImage({url: imageURL})
     .then(function(image){
       if (image){
         IDs.push(image._id);
       }
       if (imageArray.length === 0){
+        console.log('CALL BACK !!!!!!')
         callback(IDs); 
       } else {
         var nextImage = imageArray.shift()

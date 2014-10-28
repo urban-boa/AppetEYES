@@ -2,11 +2,17 @@
 angular.module('Appeteyes.controllers', [])
 
 .controller('AppeteyesCtrl', function($scope, Fooder, Yelper, Preferences, $http) {
-  console.log('APPETEYES CONTROLLER RUNNING NOW');
+  
+  Preferences.importPreferences(function(newPreferences){
+    $scope.cuisines = newPreferences.cuisines;
+    $scope.location = newPreferences.location;
+    $scope.getPics($scope.cuisines[0], $scope.location, $scope.offset);
+  });
+
   //Local Cache with Response from the Yelp API
   $scope.pics = Fooder.currentPics()||[];
   //Used to Store the current picture
-  $scope.food =$scope.pics[0]||''; 
+  $scope.food = $scope.pics[0]||''; 
   //Gets information about the current session. If the user already has loaded pictures, it prevents the App from making another Yelp Request
   $scope.isNotLoaded = Fooder.isNotLoaded;
   $scope.like = 'Start Swipin';
@@ -34,7 +40,7 @@ angular.module('Appeteyes.controllers', [])
   $scope.firstPic = function(){
     if ($scope.pics.length < 6) {
       $scope.isNotLoaded = true;
-      $scope.getPics('food','san-francisco', $scope.offset);
+      $scope.getPics($scope.cuisines[0], $scope.location, $scope.offset);
     }
     return $scope.pics.shift();
   };
@@ -105,21 +111,18 @@ angular.module('Appeteyes.controllers', [])
     
   });
 
-  console.log('Preferences.preferences()', Preferences.preferences());
-
-  $scope.cuisines = Preferences.preferences().cuisines;
-  $scope.location = Preferences.preferences().location || 'San-Francisco';
-
-  console.log("TestTTTTT", $scope.cuisines, $scope.location);
-
-  //Sets up default Settings for Category:Food / Location:San Francisco
-  $scope.getPics($scope.cuisines[0], $scope.location, $scope.offset);
-  console.log($scope.pics);
-
 })
 
-.controller('MyFoodiesCtrl', function($scope, Fooder) {
+.controller('MyFoodiesCtrl', function($scope, Fooder, $http) {
   $scope.foods = Fooder.getSelected();
+  $http({
+    method: 'GET',
+    url: '/users/likes'
+  })
+  .then(function(data){
+    console.log('data from get request on users/liked', data);
+    Fooder.setLiked(data.data);
+  });
 })
 
 .controller('FoodDetailCtrl', function($scope, $stateParams, Fooder) {
@@ -157,7 +160,7 @@ angular.module('Appeteyes.controllers', [])
   $scope.importUserPreferences = function(){
     //uncommenting when importing from factory/server works
     //get token from local storage
-    $scope.userPreferences = Preferences.importPreferences(localToken);
+    $scope.userPreferences = Preferences.importPreferences();
     console.log('user prefs pulled from db on load', $scope.userPreferences);
 
     //remove once importing from factory/server works
@@ -168,7 +171,6 @@ angular.module('Appeteyes.controllers', [])
 
     //pre-select options from imported preferences
     //set the imported cuisines
-    console.log('++++++++++++++++++++++++',  $scope.userPreferences);
     for (var i=0; i<$scope.userPreferences.cuisines.length; i++){
      $scope.selectedOption.Cuisines[$scope.userPreferences.cuisines[i]] = $scope.userPreferences.cuisines[i];
     }
@@ -182,6 +184,8 @@ angular.module('Appeteyes.controllers', [])
       $scope.locationInput = $scope.userPreferences.location;
     }
   };
+
+  $scope.importUserPreferences();
 
   //an array of objects that populates the preferences tab
   $scope.preferencesList = [
@@ -257,6 +261,7 @@ angular.module('Appeteyes.controllers', [])
     for (var key in $scope.selectedOption.Cuisines){
       $scope.userPreferences.cuisines.push(key);
     }
+    Fooder.resetPics();
     //use factory to send the updated user preferences to the server
     Preferences.savePreferences($scope.userPreferences);
   };
