@@ -1,7 +1,7 @@
 AppetEYES
 =========
 
-__Getting Started:__  
+**Getting Started:**  
 Fork  
 Clone  
 NPM install  
@@ -10,7 +10,7 @@ Run mongod.exe from the bin folder residing within the mongoDB installation dire
 Run nodemon server.js  
 Navigate browser to http://localhost:8080  
 
-_DO NOT MAKE CHANGES TO FILES IN WWW FOLDER_  
+**DO NOT MAKE CHANGES TO FILES IN WWW FOLDER**  
   - Make changes to files in app folder instead
   
 **To Be Dones:**  
@@ -19,7 +19,7 @@ Implement geolocation (https://cordova.apache.org/docs/en/3.0.0/cordova_geolocat
 Beautify the UI (pictures take up whole empty area on screen)  
 Build functionality for "Give me random!"  
 
-Other Ideas:  
+**Other Ideas:**  
 Allow users to upload images  
 Accrue stats on likes/dislikes for each image and allow people to see stats  
 Splash screen on login  
