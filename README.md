@@ -1,7 +1,7 @@
 AppetEYES
 =========
 
-*Getting Started:*  
+_Getting Started:_  
 Fork  
 Clone  
 NPM install  
@@ -10,7 +10,7 @@ Run mongod.exe from the bin folder residing within the mongoDB installation dire
 Run nodemon server.js  
 Navigate browser to http://localhost:8080  
 
-*DO NOT MAKE CHANGES TO FILES IN WWW FOLDER*  
+_DO NOT MAKE CHANGES TO FILES IN WWW FOLDER_  
   - Make changes to files in app folder instead
   
 *To Be Dones:*  
