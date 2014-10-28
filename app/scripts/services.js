@@ -79,7 +79,7 @@ angular.module('Appeteyes.services', [])
     })
     .then(function (resp) {
       if (resp.data.token) {
-        $state.transitionTo('tab.appeteyes');
+        $state.transitionTo('tab.preferences');
         Preferences.getLiked(function(priorLikes){
           Fooder.setLikes(priorLikes);
         });
