@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('Appeteyes', ['ionic', 'config', 'Appeteyes.controllers', 'Appeteyes.services'])
+angular.module('Appeteyes', ['famous.angular', 'ionic', 'config', 'Appeteyes.controllers', 'Appeteyes.services'])
 
 .run(function($ionicPlatform, $rootScope, $state, Auth) {
 
