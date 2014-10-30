@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Appeteyes.controllers', []);
+angular.module('Appeteyes.controllers', ['ionic', 'famous.angular']);
 
 angular.module('Appeteyes.controllers')
 
