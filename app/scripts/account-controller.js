@@ -2,7 +2,7 @@
 // angular.module('Appeteyes.controllers', ['famous.angular'])
 angular.module('Appeteyes.controllers')
 
-.controller('AccountCtrl', ['$scope', '$famous', function($scope, $famous, Auth, Fooder) {
+.controller('AccountCtrl', function($scope, $famous, Auth, Fooder) {
   //$scope.user.username and $scope.user.password are being used as ng-models on the template URL tab-account
   $scope.user = {
     content: "Change me!"
@@ -29,7 +29,7 @@ angular.module('Appeteyes.controllers')
     $famous.find('fa-flipper')[0].flip();
   };
 
-}]);
+});
 
 // .controller('FlipperCtrl', ['$scope', '$famous', function($scope, $famous) {
     
