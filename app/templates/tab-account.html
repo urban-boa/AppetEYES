@@ -4,37 +4,77 @@
       <!-- Email -->
 
       <div>
-        <fa-app style="height: 200px"><fa-surface fa-background-color="'blue'">
-        </fa-surface>
+        <fa-app ng-controller="AccountCtrl" style="height: 200px">
+        <!-- <fa-surface fa-background-color="'blue'">
+        </fa-surface> -->
 
-        <fa-modifier fa-size=[200,200] fa-opacity="bgOpacity">
+     <!--    <fa-modifier fa-size="[200,200]" fa-opacity="bgOpacity">
         <fa-image-surface fa-image-url="../images/mozilla.png">
         </fa-image-surface>
-      </fa-modifier>
+        </fa-modifier> -->
 
-      
-        </fa-app>
-      </div> 
 
-    <div>
-      <fa-app>
-      <fa-modifier fa-size="[800, 800]">
-      <fa-surface fa-background-color="'#FA5C4F'" fa-color="'black'">
-        {{user.content}}
+      <fa-flipper>
+         <!--  <fa-modifier fa-size="[200, 200]">
+            <fa-surface fa-background-color="'yellow'" fa-click="flipIt()">Click me to see me flip!</fa-surface>
+          </fa-modifier>   -->
 
-        <input ng-model="user.username" type="email" name="email" placeholder="Email" required></input>
+          <fa-modifier fa-size="[200,200]">
+            <fa-image-surface fa-image-url="../images/mozilla.png" fa-click="flipIt()">
+            </fa-image-surface>
+          </fa-modifier>
 
-        <input ng-model="user.password" type="password" name="password" placeholder="Password" required>
+         <!--  <fa-modifier fa-size="[200, 200]">
+            <fa-surface fa-background-color="'red'" fa-click="flipIt()">Flip me again!</fa-surface>
+          </fa-modifier>  -->
 
-        <button type="submit" ng-click="submitForm()">Log In</button>  
+          <fa-modifier fa-size="[200, 200]">
+           <fa-surface fa-background-color="'#FA5C4F'" fa-color="'black'" fa-click="flipIt()">
+              {{user.content}}
 
-        <button type="submit" ng-click="signUp()">Sign Up</button>
+              <input ng-model="user.username" type="email" name="email" placeholder="Email" required></input>
+
+              <input ng-model="user.password" type="password" name="password" placeholder="Password" required>
+
+              <button type="submit" ng-click="submitForm()">Log In</button>  
+
+              <button type="submit" ng-click="signUp()">Sign Up</button>
+                
+              <button type="submit" ng-click="signOut()">Sign Out</button>
+            </fa-surface>
+          </fa-modifier> 
+        </fa-flipper>
+
+        <!-- <fa-flipper> -->
+          <!-- <fa-modifier fa-size="[200, 200]">
+            <fa-surface fa-background-color="'red'" fa-click="flipItt()">Flip me again!</fa-surface>
+          </fa-modifier>
+          </fa-flipper>  -->
+
+
+            
+              </fa-app>
+            </div> 
+
+          <div>
+      <!-- <fa-app ng-controller="AccountCtrl"> -->
+      <div> Hello? </div>
+        <!-- <fa-flipper>
+          <fa-modifier fa-size="[200,200]">
+            <fa-image-surface fa-image-url="../images/mozilla.png">
+            </fa-image-surface>
+          </fa-modifier>
+          <fa-modifier fa-size="[200, 200]">
+            <fa-surface fa-background-color="'red'" fa-click="flipIt()">Flip me again!</fa-surface>
+          </fa-modifier>  
+        </fa-flipper> -->
+
+
+   
+
+
           
-        <button type="submit" ng-click="signOut()">Sign Out</button>
-      </fa-surface>
-    </fa-modifier>
-      </fa-app>
-
+      <!-- </fa-app> -->
     </div>     
 
   </ion-content>
