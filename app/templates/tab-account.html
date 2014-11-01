@@ -1,19 +1,40 @@
 <ion-view title="Account">
   <ion-content class="has-header padding">
-    <div class="list">
-      <!-- Email -->
-      <label class="item item-input">
-        <!-- <span class="input-label">Email</span> -->
-        <input ng-model="user.username" style="border:solid grey; padding:30px; margin:5px" type="email" name="email" placeholder='Email' required>
-      </label>
-      <!-- Password -->
-      <label class="item item-input">
-        <!-- <span class="input-label">Password</span> -->
-        <input ng-model="user.password" style="border:solid grey; padding:30px; margin:5px" type="password" name="password" placeholder='Password' required>
-      </label>
-    </div>      
-    <button type="submit" ng-click="submitForm()" class="button button-block button-positive button-outline">Log In</button>  
-    <button type="submit" ng-click="signUp()" class="button button-block button-balanced button-outline">Sign Up</button>
-    <button type="submit" ng-click="signOut()" class="button button-block button-assertive button-outline">Sign Out</button>
+      <div>
+        <fa-app style="height: 1000px">
+
+      <fa-flipper>
+          
+          <fa-modifier fa-size="[500,500]" fa-translate="[0, 200, 200]">
+    
+    <fa-surface>
+            <fa-image-surface fa-image-url="../images/AppetEYES.png" fa-click="flipIt()">
+            </fa-image-surface>
+          </fa-modifier>
+          
+          <!-- <fa-modifier fa-size="[200, 200]">
+            <fa-image-surface fa-image-url="../images/AppetEYESback.png" fa-click="flipIt()">
+            </fa-image-surface>
+          </fa-modifier>  -->
+
+          <fa-modifier fa-size="[500, 500]" fa-translate="[50, 200, 200]">
+           <fa-surface fa-color="'black'">
+
+              <input ng-model="user.username" type="email" name="email" placeholder="Email" required></input>
+              <input ng-model="user.password" type="password" name="password" placeholder="Password" required>
+
+              <button type="submit" ng-click="submitForm()">Log In</button>  
+
+              <button type="submit" ng-click="signUp()">Sign Up</button>
+                
+              <button type="submit" ng-click="signOut()">Sign Out</button>
+            </fa-surface>
+          </fa-modifier> 
+
+        </fa-flipper>
+
+              </fa-app>
+            </div>      
+
   </ion-content>
 </ion-view>
